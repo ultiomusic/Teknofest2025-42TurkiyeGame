@@ -1,5 +1,6 @@
-pos: { ...START },
-step: 0, // sıradaki index
+const state = {
+	pos: { ...START },
+	step: 0, // Sıradaki index
 	playing: true,
 };
 
@@ -46,7 +47,10 @@ function win() {
 
 
 function inBounds(x, y) {
-	return x >= 0 && y >= 0 && x < GRID && y < GRID;
+	const xBounds = x >= 0 && x < GRID;
+	const yBounds = y >= 0 && y < GRID;
+
+	return xBounds && yBounds;
 }
 
 
@@ -54,7 +58,7 @@ function handleMove(dx, dy) {
 	if (!state.playing) return;
 	const nx = state.pos.x + dx;
 	const ny = state.pos.y + dy;
-	if (!inBounds(nx, ny)) return; // sınır dışına çıkma: hamleyi yok say
+	if (!inBounds(nx, ny)) return; // Sınır dışına çıkma: Hamleyi yok say
 
 
 	// Sıradaki beklenen hücre
@@ -67,7 +71,7 @@ function handleMove(dx, dy) {
 			win();
 		}
 	} else {
-		// Yanlış kare -> reset
+		// Yanlış kare -> Reset
 		reset(true);
 	}
 }
@@ -77,7 +81,7 @@ function handleMove(dx, dy) {
 function onKey(e) {
 	const key = e.key;
 	if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " ", "Space"].includes(key)) {
-		e.preventDefault(); // sayfa kaymasını engelle
+		e.preventDefault(); // Sayfa kaymasını engelle
 	}
 	switch (key) {
 		case 'ArrowUp': handleMove(0, -1); break;
