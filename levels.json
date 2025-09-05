@@ -1,0 +1,54 @@
+{
+	"levels": {
+		"1": {
+			"start_position": {
+				"x": 10,
+				"y": 10
+			},
+			"sequence": [
+				{
+					"type": "move",
+					"direction": "up"
+				},
+				{
+					"type": "move",
+					"direction": "right"
+				},
+				{
+					"type": "move",
+					"direction": "down"
+				},
+				{
+					"type": "move",
+					"direction": "left"
+				},
+				{
+					"type": "block",
+					"direction": "up"
+				},
+				{
+					"type": "block",
+					"direction": "right"
+				},
+				{
+					"type": "block",
+					"direction": "down"
+				},
+				{
+					"type": "block",
+					"direction": "left"
+				},
+				{
+					"type": "loop",
+					"iterations": 6,
+					"sequence": [
+						{
+							"type": "move",
+							"direction": "left"
+						}
+					]
+				}
+			]
+		}
+	}
+}
