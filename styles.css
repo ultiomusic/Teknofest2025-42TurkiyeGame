@@ -111,6 +111,16 @@ body {
 	min-width: 30%;
 }
 
+.algorithm .algo-block {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	margin: 0 5px;
+	background-color: #60a5fa;
+	vertical-align: middle;
+	border: 2px solid orange;
+}
+
 .player {
   position: absolute;
   width: var(--cell);
