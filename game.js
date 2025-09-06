@@ -1,12 +1,13 @@
-const GRID = 5;
+const GRID = 7;
 
 const START = { x: 0, y: 0 };
+const OFFSET = { x: 5, y: 5 };
 
 const SEQ = [
-	{ x: 0, y: 0 },
 	{ x: 1, y: 0 },
 	{ x: 2, y: 0 },
 	{ x: 3, y: 0 },
+	{ x: 4, y: 0 },
 ];
 
 const state = {
@@ -15,9 +16,11 @@ const state = {
 	playing: true,
 };
 
+const player = document.getElementById("player");
+
 function placePlayer() {
-	const tx = `calc(${state.pos.x} * (var(--cell) + var(--gap)))`;
-	const ty = `calc(${state.pos.y} * (var(--cell) + var(--gap)))`;
+	const tx = `calc(${state.pos.x} * (var(--cell) + var(--gap)) + 5px)`;
+	const ty = `calc(${state.pos.y} * (var(--cell) + var(--gap)) + 5px)`;
 	player.style.transform = `translate(${tx}, ${ty})`;
 }
 

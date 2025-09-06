@@ -1,74 +1,122 @@
 <!DOCTYPE html>
 <html lang="tr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Level 1 • Sıralı Yol Oyunu</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
 
-  <body>
-    <div class="wrap">
-      <div class="board-wrap">
-        <div
-          id="board"
-          class="board"
-          aria-label="7x7 oyun tahtası"
-          tabindex="0"
-        ></div>
-        <div id="win" class="overlay" aria-live="polite" aria-atomic="true">
-          <div class="card">
-            <h2>🏁 Bölüm Tamamlandı!</h2>
-            <p>
-              Koşulları sırayla sağlayarak <strong>FINISH</strong>'e ulaştın.
-            </p>
-            <button id="nextBtn" class="btn" style="min-width: 200px">
-              Tekrar Oyna
-            </button>
-          </div>
-        </div>
-        <footer>
-          Ok tuşlarıyla hareket et.
-          <span class="muted">(sayfa kayması engellendi)</span>
-        </footer>
-      </div>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Level 1 • Sıralı Yol Oyunu</title>
+	<link rel="stylesheet" href="styles.css" />
+</head>
 
-      <aside class="sidebar" id="sidebar">
-        <h1><span class="dot"></span> Level 1 • Sıralı Yol</h1>
-        <div class="muted">
-          Amaç: Sağdaki kurallara uyarak sırasıyla işaretli karelerden geç ve
-          FINISH'e ulaş.
-        </div>
+<body>
+	<div class="wrap">
+		<div class="board-wrap">
+			<div id="board" class="board" aria-label="7x7 oyun tahtası" tabindex="0">
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div class="cell"></div>
+				<div id="player" class="player"></div>
+			</div>
+			<div id="win" class="overlay" aria-live="polite" aria-atomic="true">
+				<div class="card">
+					<h2>🏁 Bölüm Tamamlandı!</h2>
+					<p>
+						Koşulları sırayla sağlayarak <strong>FINISH</strong>'e ulaştın.
+					</p>
+					<button id="nextBtn" class="btn" style="min-width: 200px">
+						Tekrar Oyna
+					</button>
+				</div>
+			</div>
+			<footer>
+				Ok tuşlarıyla hareket et.
+				<span class="muted">(sayfa kayması engellendi)</span>
+			</footer>
+		</div>
 
-        <div class="rule">
-          <strong>Kurallar</strong>
-          <ul>
-            <li>
-              <strong>Yalnızca sıradaki kareye</strong> (1 → 2 → … → F) adım at.
-            </li>
-            <li>Yanlış kareye basarsan <strong>oyun başa döner</strong>.</li>
-            <li>
-              Kontrol: <span class="kbd">↑</span> <span class="kbd">↓</span>
-              <span class="kbd">←</span> <span class="kbd">→</span>
-            </li>
-          </ul>
-        </div>
+		<aside class="sidebar" id="sidebar">
+			<h1><span class="dot"></span> Level 1 • Sıralı Yol</h1>
+			<div class="muted">
+				Amaç: Sağdaki kurallara uyarak sırasıyla işaretli karelerden geç ve
+				FINISH'e ulaş.
+			</div>
 
-        <div class="progress">
-          <span>İlerleme</span>
-          <div class="bar" aria-hidden="true"><i id="bar"></i></div>
-          <span id="count" class="muted">0/10</span>
-        </div>
+			<div class="rule">
+				<strong>Kurallar</strong>
+				<ul>
+					<li>
+						<strong>Yalnızca sıradaki kareye</strong> (1 → 2 → … → F) adım at.
+					</li>
+					<li>Yanlış kareye basarsan <strong>oyun başa döner</strong>.</li>
+					<li>
+						Kontrol: <span class="kbd">↑</span> <span class="kbd">↓</span>
+						<span class="kbd">←</span> <span class="kbd">→</span>
+					</li>
+				</ul>
+			</div>
 
-        <div class="controls">
-          <div class="row">
-            <button id="resetBtn" class="btn">Yeniden Başlat</button>
-            <button id="focusBtn" class="btn">Tahtaya Odaklan</button>
-          </div>
-        </div>
-      </aside>
-    </div>
+			<div class="progress">
+				<span>İlerleme</span>
+				<div class="bar" aria-hidden="true"><i id="bar"></i></div>
+				<span id="count" class="muted">0/10</span>
+			</div>
 
-    <script src="game.js"></script>
-  </body>
+			<div class="controls">
+				<div class="row">
+					<button id="resetBtn" class="btn">Yeniden Başlat</button>
+					<button id="focusBtn" class="btn">Tahtaya Odaklan</button>
+				</div>
+			</div>
+		</aside>
+	</div>
+
+	<script src="game.js"></script>
+</body>
+
 </html>
