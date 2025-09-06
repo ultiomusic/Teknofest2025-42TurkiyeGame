@@ -1,9 +1,19 @@
+const GRID = 5;
+
+const START = { x: 0, y: 0 };
+
+const SEQ = [
+	{ x: 0, y: 0 },
+	{ x: 1, y: 0 },
+	{ x: 2, y: 0 },
+	{ x: 3, y: 0 },
+];
+
 const state = {
 	pos: { ...START },
 	step: 0, // Sıradaki index
 	playing: true,
 };
-
 
 function placePlayer() {
 	const tx = `calc(${state.pos.x} * (var(--cell) + var(--gap)))`;
@@ -11,15 +21,13 @@ function placePlayer() {
 	player.style.transform = `translate(${tx}, ${ty})`;
 }
 
-
 function updateProgress() {
 	const total = SEQ.length;
 	const done = Math.min(state.step, total);
 	const pct = (done / total) * 100;
-	barEl.style.width = pct + '%';
+	barEl.style.width = pct + "%";
 	countEl.textContent = `${done}/${total}`;
 }
-
 
 function reset(hard = false) {
 	state.pos = { ...START };
@@ -28,23 +36,21 @@ function reset(hard = false) {
 	placePlayer();
 	updateProgress();
 	if (hard) {
-		boardEl.classList.remove('shake');
+		boardEl.classList.remove("shake");
 		requestAnimationFrame(() => {
-			requestAnimationFrame(() => boardEl.classList.add('shake'));
+			requestAnimationFrame(() => boardEl.classList.add("shake"));
 		});
-		setTimeout(() => boardEl.classList.remove('shake'), 400);
+		setTimeout(() => boardEl.classList.remove("shake"), 400);
 	}
-	winEl.classList.remove('show');
+	winEl.classList.remove("show");
 	boardEl.focus({ preventScroll: true });
 }
-
 
 function win() {
 	state.playing = false;
 	updateProgress();
-	winEl.classList.add('show');
+	winEl.classList.add("show");
 }
-
 
 function inBounds(x, y) {
 	const xBounds = x >= 0 && x < GRID;
@@ -53,19 +59,20 @@ function inBounds(x, y) {
 	return xBounds && yBounds;
 }
 
-
 function handleMove(dx, dy) {
 	if (!state.playing) return;
 	const nx = state.pos.x + dx;
 	const ny = state.pos.y + dy;
 	if (!inBounds(nx, ny)) return; // Sınır dışına çıkma: Hamleyi yok say
 
-
 	// Sıradaki beklenen hücre
 	const expect = SEQ[state.step];
 	if (expect && expect.x === nx && expect.y === ny) {
-		state.pos.x = nx; state.pos.y = ny; state.step++;
-		placePlayer(); updateProgress();
+		state.pos.x = nx;
+		state.pos.y = ny;
+		state.step++;
+		placePlayer();
+		updateProgress();
 		if (state.step >= SEQ.length) {
 			// Son etiket F'e ulaşıldı
 			win();
@@ -76,32 +83,45 @@ function handleMove(dx, dy) {
 	}
 }
 
-
 // Klavye
 function onKey(e) {
 	const key = e.key;
-	if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " ", "Space"].includes(key)) {
+	if (
+		["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " ", "Space"].includes(
+			key
+		)
+	) {
+		console.log("Key: " + key);
 		e.preventDefault(); // Sayfa kaymasını engelle
 	}
 	switch (key) {
-		case 'ArrowUp': handleMove(0, -1); break;
-		case 'ArrowDown': handleMove(0, 1); break;
-		case 'ArrowLeft': handleMove(-1, 0); break;
-		case 'ArrowRight': handleMove(1, 0); break;
-		case 'r': case 'R': reset(); break;
+		case "ArrowUp":
+			handleMove(0, -1);
+			break;
+		case "ArrowDown":
+			handleMove(0, 1);
+			break;
+		case "ArrowLeft":
+			handleMove(-1, 0);
+			break;
+		case "ArrowRight":
+			handleMove(1, 0);
+			break;
+		case "r":
+		case "R":
+			reset();
+			break;
 	}
 }
 
-
-document.addEventListener('keydown', onKey);
-document.getElementById('resetBtn').addEventListener('click', () => reset());
-document.getElementById('focusBtn').addEventListener('click', () => boardEl.focus());
-document.getElementById('nextBtn').addEventListener('click', () => reset());
-
+document.addEventListener("keydown", onKey);
+document.getElementById("resetBtn").addEventListener("click", () => reset());
+document.getElementById("focusBtn").addEventListener("click", () => boardEl.focus());
+document.getElementById("nextBtn").addEventListener("click", () => reset());
 
 // İlk kurulum
 placePlayer();
 updateProgress();
-boardEl.setAttribute('tabindex', '0');
-boardEl.addEventListener('click', () => boardEl.focus());
+boardEl.setAttribute("tabindex", "0");
+boardEl.addEventListener("click", () => boardEl.focus());
 boardEl.focus({ preventScroll: true });
