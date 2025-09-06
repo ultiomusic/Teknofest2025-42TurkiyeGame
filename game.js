@@ -1,27 +1,38 @@
 const GRID = 7;
+const PLAYER_OFFSET = { x: 5, y: 5 };
 
-const START = { x: 0, y: 0 };
-const OFFSET = { x: 5, y: 5 };
+let levelConfig;
 
-const SEQ = [
-	{ x: 1, y: 0 },
-	{ x: 2, y: 0 },
-	{ x: 3, y: 0 },
-	{ x: 4, y: 0 },
-];
+let START;
 
-const state = {
+let SEQ;
+
+let state = {
 	pos: { ...START },
 	step: 0, // Sıradaki index
 	playing: true,
 };
 
-const player = document.getElementById("player");
+const PLAYER = document.getElementById("player");
+
+async function loadLevelConfig() {
+	const data = await fetch('./levels.json');
+	if (!data.ok) throw new Error('Can\'t load the levels.json file.');
+	levelConfig = await data.json();
+}
+
+async function loadLevel()
+{
+	await loadLevelConfig();
+	START = levelConfig.levels.one.startPosition;
+	state.pos = { ...START };
+	SEQ = levelConfig.levels.one.sequence;
+}
 
 function placePlayer() {
 	const tx = `calc(${state.pos.x} * (var(--cell) + var(--gap)) + 5px)`;
 	const ty = `calc(${state.pos.y} * (var(--cell) + var(--gap)) + 5px)`;
-	player.style.transform = `translate(${tx}, ${ty})`;
+	PLAYER.style.transform = `translate(${tx}, ${ty})`;
 }
 
 function updateProgress() {
@@ -117,14 +128,21 @@ function onKey(e) {
 	}
 }
 
-document.addEventListener("keydown", onKey);
-document.getElementById("resetBtn").addEventListener("click", () => reset());
-document.getElementById("focusBtn").addEventListener("click", () => boardEl.focus());
-document.getElementById("nextBtn").addEventListener("click", () => reset());
+function initListeners() {
+	document.addEventListener("keydown", onKey);
+	document.getElementById("resetBtn").addEventListener("click", () => reset());
+	document.getElementById("focusBtn").addEventListener("click", () => boardEl.focus());
+	document.getElementById("nextBtn").addEventListener("click", () => reset());
+}
 
-// İlk kurulum
-placePlayer();
-updateProgress();
-boardEl.setAttribute("tabindex", "0");
-boardEl.addEventListener("click", () => boardEl.focus());
-boardEl.focus({ preventScroll: true });
+async function initGame() {
+	await loadLevel();
+	placePlayer();
+	updateProgress();
+	boardEl.setAttribute("tabindex", "0");
+	boardEl.addEventListener("click", () => boardEl.focus());
+	boardEl.focus({ preventScroll: true });
+}
+
+initListeners();
+initGame();

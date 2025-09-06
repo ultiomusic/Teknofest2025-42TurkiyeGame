@@ -1,53 +1,14 @@
 {
 	"levels": {
-		"1": {
+		"one": {
 			"startPosition": {
-				"x": 10,
-				"y": 10
+				"x": 0,
+				"y": 0
 			},
 			"sequence": [
-				{
-					"type": "move",
-					"direction": "up"
-				},
-				{
-					"type": "move",
-					"direction": "right"
-				},
-				{
-					"type": "move",
-					"direction": "down"
-				},
-				{
-					"type": "move",
-					"direction": "left"
-				},
-				{
-					"type": "block",
-					"direction": "up"
-				},
-				{
-					"type": "block",
-					"direction": "right"
-				},
-				{
-					"type": "block",
-					"direction": "down"
-				},
-				{
-					"type": "block",
-					"direction": "left"
-				},
-				{
-					"type": "loop",
-					"iterations": 6,
-					"sequence": [
-						{
-							"type": "move",
-							"direction": "left"
-						}
-					]
-				}
+				{ "x": 1, "y": 0},
+				{ "x": 2, "y": 0},
+				{ "x": 3, "y": 0}
 			]
 		}
 	}
