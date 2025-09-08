@@ -1,9 +1,9 @@
 const GRID = 7;
 const PLAYER_OFFSET = { x: 5, y: 5 };
 
-let levelConfig = { };
+let levelConfig = {};
 
-let START = { };
+let START = {};
 
 let SEQ;
 
@@ -25,24 +25,20 @@ async function loadLevelConfig() {
 	levelConfig = await data.json();
 }
 
-function parseSequence(level)
-{
-	SEQ = [ ];
+function parseSequence(level) {
+	SEQ = [];
 	const mainSequence = level.sequence;
 	for (let i = 0; i < mainSequence.length; i++) {
 		const element = mainSequence[i];
-		if (typeof(element) === "string") {
+		if (typeof (element) === "string") {
 			SEQ.push(element);
-			//console.log("Element: " + element);
 		} else if (element.loop) {
 			for (let j = 0; j < element.loop.sequence.length * element.loop.iteration; j++) {
 				const loopElement = element.loop.sequence[j % element.loop.sequence.length];
 				SEQ.push(loopElement);
-				//console.log("Loop Element: " + loopElement);
 			}
 		}
 	}
-	//console.log("SEQUENCE: " + SEQ);
 }
 
 function parseAlgorithmText(level) {
@@ -59,7 +55,7 @@ function parseAlgorithmText(level) {
 
 		if (element[element.length - 1] === '{') {
 			insert_tab = 1;
-		} else if (element[0] === '}'){
+		} else if (element[0] === '}') {
 			insert_tab = 0;
 		}
 		const p = document.createElement("p");
@@ -73,8 +69,7 @@ function parseAlgorithmText(level) {
 	}
 }
 
-async function loadLevel()
-{
+async function loadLevel() {
 	await loadLevelConfig();
 	START = levelConfig.levels.one.startPosition;
 	state.pos = { ...START };
@@ -117,7 +112,6 @@ function win() {
 	state.playing = false;
 	updateProgress();
 	winEl.classList.add("show");
-	//console.log("You won!");
 }
 
 function inBounds(x, y) {
@@ -141,9 +135,6 @@ function handleMove(dx, dy) {
 
 	// Sıradaki beklenen hücre
 	const expect = SEQ[state.step];
-	// console.log(SEQ[state.step]);
-	// console.log(currentMove);
-	// if (expect && expect.x === nx && expect.y === ny) {
 	if (expect && expect === currentMove) {
 		state.pos.x = nx;
 		state.pos.y = ny;
@@ -151,7 +142,6 @@ function handleMove(dx, dy) {
 		placePlayer();
 		updateProgress();
 		next = SEQ[state.step];
-		//console.log("Next: " + next);
 		if (next && next === "end") {
 			// Son etiket F'e ulaşıldı
 			win();
@@ -170,7 +160,6 @@ function onKey(e) {
 			key
 		)
 	) {
-		//console.log("Key: " + key);
 		e.preventDefault(); // Sayfa kaymasını engelle
 	}
 	switch (key) {
