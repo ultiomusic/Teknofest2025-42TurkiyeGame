@@ -25,10 +25,10 @@ async function loadLevelConfig() {
 	levelConfig = await data.json();
 }
 
-function parseSequence(levelConfig)
+function parseSequence(level)
 {
 	SEQ = [ ];
-	const mainSequence = levelConfig.levels.one.sequence;
+	const mainSequence = level.sequence;
 	for (let i = 0; i < mainSequence.length; i++) {
 		const element = mainSequence[i];
 		if (typeof(element) === "string") {
@@ -45,12 +45,41 @@ function parseSequence(levelConfig)
 	//console.log("SEQUENCE: " + SEQ);
 }
 
+function parseAlgorithmText(level) {
+	const algoEl = document.getElementById("algorithm");
+
+	if (!algoEl) {
+		console.error("Can't find the algorithm paragraph.");
+		return;
+	}
+
+	let insert_tab;
+	for (let index = 0; index < level.algorithm.length; index++) {
+		const element = level.algorithm[index];
+
+		if (element[element.length - 1] === '{') {
+			insert_tab = 1;
+		} else if (element[0] === '}'){
+			insert_tab = 0;
+		}
+		const p = document.createElement("p");
+		const text = document.createTextNode(element);
+		if (insert_tab && element[element.length - 1] !== '{')
+			p.innerHTML += "&emsp;";
+		p.appendChild(text);
+		algoEl.appendChild(p);
+		if (index + 1 != level.algorithm.length)
+			algoEl.appendChild(document.createElement("br"));
+	}
+}
+
 async function loadLevel()
 {
 	await loadLevelConfig();
 	START = levelConfig.levels.one.startPosition;
 	state.pos = { ...START };
-	parseSequence(levelConfig);
+	parseSequence(levelConfig.levels.one);
+	parseAlgorithmText(levelConfig.levels.one);
 }
 
 function placePlayer() {

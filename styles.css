@@ -96,7 +96,7 @@ body {
   text-shadow: none;
 }
 
-.algorithm {
+#algorithm {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -105,13 +105,11 @@ body {
 	text-align: left;
 	font-size: 1.125rem;
 }
-
-.algorithm p {
-	margin: 2.5%;
+#algorithm p {
+	margin: 1%;
 	min-width: 30%;
 }
-
-.algorithm .algo-block {
+#algorithm .algo-block {
 	display: inline-block;
 	width: 20px;
 	height: 20px;
