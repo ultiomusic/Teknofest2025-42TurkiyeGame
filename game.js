@@ -14,6 +14,10 @@ let state = {
 };
 
 const PLAYER = document.getElementById("player");
+const boardEl = document.getElementById("board");
+const barEl = document.getElementById("bar");
+const countEl = document.getElementById("count");
+const winEl = document.getElementById("win");
 
 async function loadLevelConfig() {
 	const data = await fetch('./levels.json');
@@ -29,15 +33,16 @@ function parseSequence(levelConfig)
 		const element = mainSequence[i];
 		if (typeof(element) === "string") {
 			SEQ.push(element);
-			console.log("Element: " + element);
+			//console.log("Element: " + element);
 		} else if (element.loop) {
 			for (let j = 0; j < element.loop.sequence.length * element.loop.iteration; j++) {
 				const loopElement = element.loop.sequence[j % element.loop.sequence.length];
 				SEQ.push(loopElement);
-				console.log("Loop Element: " + loopElement);
+				//console.log("Loop Element: " + loopElement);
 			}
 		}
 	}
+	//console.log("SEQUENCE: " + SEQ);
 }
 
 async function loadLevel()
@@ -55,7 +60,7 @@ function placePlayer() {
 }
 
 function updateProgress() {
-	const total = SEQ.length;
+	const total = SEQ.length - 1;
 	const done = Math.min(state.step, total);
 	const pct = (done / total) * 100;
 	barEl.style.width = pct + "%";
@@ -83,7 +88,7 @@ function win() {
 	state.playing = false;
 	updateProgress();
 	winEl.classList.add("show");
-	console.log("You won!");
+	//console.log("You won!");
 }
 
 function inBounds(x, y) {
@@ -107,8 +112,8 @@ function handleMove(dx, dy) {
 
 	// Sıradaki beklenen hücre
 	const expect = SEQ[state.step];
-	console.log(SEQ[state.step]);
-	console.log(currentMove);
+	// console.log(SEQ[state.step]);
+	// console.log(currentMove);
 	// if (expect && expect.x === nx && expect.y === ny) {
 	if (expect && expect === currentMove) {
 		state.pos.x = nx;
@@ -116,8 +121,8 @@ function handleMove(dx, dy) {
 		state.step++;
 		placePlayer();
 		updateProgress();
-		next = SEQ[state.step + 1];
-		console.log("Next: " + next);
+		next = SEQ[state.step];
+		//console.log("Next: " + next);
 		if (next && next === "end") {
 			// Son etiket F'e ulaşıldı
 			win();
@@ -136,7 +141,7 @@ function onKey(e) {
 			key
 		)
 	) {
-		console.log("Key: " + key);
+		//console.log("Key: " + key);
 		e.preventDefault(); // Sayfa kaymasını engelle
 	}
 	switch (key) {
