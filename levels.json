@@ -6,9 +6,22 @@
 				"y": 0
 			},
 			"sequence": [
-				{ "x": 1, "y": 0},
-				{ "x": 2, "y": 0},
-				{ "x": 3, "y": 0}
+				"right",
+				"right",
+				"right",
+				"right",
+				{
+					"loop": {
+						"iteration": 6,
+						"sequence": [
+							"right",
+							"left",
+							"up",
+							"down"
+						]
+					}
+				},
+				"end"
 			]
 		}
 	}

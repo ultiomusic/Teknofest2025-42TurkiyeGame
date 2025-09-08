@@ -1,9 +1,9 @@
 const GRID = 7;
 const PLAYER_OFFSET = { x: 5, y: 5 };
 
-let levelConfig;
+let levelConfig = { };
 
-let START;
+let START = { };
 
 let SEQ;
 
@@ -21,12 +21,31 @@ async function loadLevelConfig() {
 	levelConfig = await data.json();
 }
 
+function parseSequence(levelConfig)
+{
+	SEQ = [ ];
+	const mainSequence = levelConfig.levels.one.sequence;
+	for (let i = 0; i < mainSequence.length; i++) {
+		const element = mainSequence[i];
+		if (typeof(element) === "string") {
+			SEQ.push(element);
+			console.log("Element: " + element);
+		} else if (element.loop) {
+			for (let j = 0; j < element.loop.sequence.length * element.loop.iteration; j++) {
+				const loopElement = element.loop.sequence[j % element.loop.sequence.length];
+				SEQ.push(loopElement);
+				console.log("Loop Element: " + loopElement);
+			}
+		}
+	}
+}
+
 async function loadLevel()
 {
 	await loadLevelConfig();
 	START = levelConfig.levels.one.startPosition;
 	state.pos = { ...START };
-	SEQ = levelConfig.levels.one.sequence;
+	parseSequence(levelConfig);
 }
 
 function placePlayer() {
@@ -64,6 +83,7 @@ function win() {
 	state.playing = false;
 	updateProgress();
 	winEl.classList.add("show");
+	console.log("You won!");
 }
 
 function inBounds(x, y) {
@@ -77,17 +97,28 @@ function handleMove(dx, dy) {
 	if (!state.playing) return;
 	const nx = state.pos.x + dx;
 	const ny = state.pos.y + dy;
-	if (!inBounds(nx, ny)) return; // Sınır dışına çıkma: Hamleyi yok say
+	//if (!inBounds(nx, ny)) return; // Sınır dışına çıkma: Hamleyi yok say
+
+	let currentMove;
+	if (dx != 0)
+		currentMove = dx < 0 ? "left" : "right";
+	else if (dy != 0)
+		currentMove = dy < 0 ? "up" : "down";
 
 	// Sıradaki beklenen hücre
 	const expect = SEQ[state.step];
-	if (expect && expect.x === nx && expect.y === ny) {
+	console.log(SEQ[state.step]);
+	console.log(currentMove);
+	// if (expect && expect.x === nx && expect.y === ny) {
+	if (expect && expect === currentMove) {
 		state.pos.x = nx;
 		state.pos.y = ny;
 		state.step++;
 		placePlayer();
 		updateProgress();
-		if (state.step >= SEQ.length) {
+		next = SEQ[state.step + 1];
+		console.log("Next: " + next);
+		if (next && next === "end") {
 			// Son etiket F'e ulaşıldı
 			win();
 		}
