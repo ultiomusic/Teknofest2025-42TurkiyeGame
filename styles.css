@@ -108,6 +108,8 @@ body {
 #algorithm p {
 	margin: 1%;
 	min-width: 30%;
+	font-size: 1.5rem;
+	font-weight: bold;
 }
 #algorithm .algo-block {
 	display: inline-block;

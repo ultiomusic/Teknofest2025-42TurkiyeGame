@@ -71,10 +71,11 @@ function parseAlgorithmText(level) {
 
 async function loadLevel() {
 	await loadLevelConfig();
-	START = levelConfig.levels.one.startPosition;
+	const level = levelConfig.levels[3];
+	START = level.startPosition;
 	state.pos = { ...START };
-	parseSequence(levelConfig.levels.one);
-	parseAlgorithmText(levelConfig.levels.one);
+	parseSequence(level);
+	parseAlgorithmText(level);
 }
 
 function placePlayer() {
@@ -108,10 +109,15 @@ function reset(hard = false) {
 	boardEl.focus({ preventScroll: true });
 }
 
+function enableWinWindow() {
+	winEl.classList.add("show");
+	PLAYER.removeEventListener("transitionend", enableWinWindow);
+}
+
 function win() {
 	state.playing = false;
 	updateProgress();
-	winEl.classList.add("show");
+	PLAYER.addEventListener("transitionend", enableWinWindow);
 }
 
 function inBounds(x, y) {

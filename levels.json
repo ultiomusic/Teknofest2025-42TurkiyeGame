@@ -1,6 +1,68 @@
 {
 	"levels": {
-		"one": {
+		"1": {
+			"startPosition": {
+				"x": 1,
+				"y": 3
+			},
+			"sequence": [
+				"right",
+				"right",
+				"right",
+				"end"
+			],
+			"algorithm": [
+				"sağ();",
+				"sağ();",
+				"sağ();"
+			]
+		},
+		"2": {
+			"startPosition": {
+				"x": 3,
+				"y": 3
+			},
+			"sequence": [
+				"left",
+				"down",
+				"right",
+				"up",
+				"end"
+			],
+			"algorithm": [
+				"sol();",
+				"aşağı();",
+				"sağ();",
+				"yukarı();"
+			]
+		},
+		"3": {
+			"startPosition": {
+				"x": 1,
+				"y": 2
+			},
+			"sequence": [
+				"down",
+				{
+					"loop": {
+						"iteration": 3,
+						"sequence": [
+							"right"
+						]
+					}
+				},
+				"down",
+				"end"
+			],
+			"algorithm": [
+				"aşağı();",
+				"tekrarla (3) {",
+				"sağ();",
+				"}",
+				"aşağı();"
+			]
+		},
+		"aaa": {
 			"startPosition": {
 				"x": 0,
 				"y": 0
