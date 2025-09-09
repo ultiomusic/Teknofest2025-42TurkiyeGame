@@ -3,4 +3,4 @@ A game designed to teach algorithms for the promotion of 42 Türkiye and Bilişi
 
 # Game Desing Document
 
-![alt text](game_desing.png)
+![alt text](game_design.png)
