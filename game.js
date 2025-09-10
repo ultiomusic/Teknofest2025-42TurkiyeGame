@@ -71,7 +71,7 @@ function parseAlgorithmText(level) {
 
 async function loadLevel() {
 	await loadLevelConfig();
-	const level = levelConfig.levels[6];
+	const level = levelConfig.levels[10];
 	START = level.startPosition;
 	state.pos = { ...START };
 	parseSequence(level);
@@ -122,9 +122,13 @@ function win() {
 
 function handleMove(dx, dy) {
 	if (!state.playing) return;
-	const nx = (state.pos.x + dx) % GRID;
-	const ny = (state.pos.y + dy) % GRID;
+	let nx = (state.pos.x + dx) % GRID;
+	let ny = (state.pos.y + dy) % GRID;
 
+	if (nx < 0)
+		nx = GRID - 1;
+	if (ny < 0)
+		ny = GRID - 1;
 	let currentMove;
 	if (dx != 0)
 		currentMove = dx < 0 ? "left" : "right";

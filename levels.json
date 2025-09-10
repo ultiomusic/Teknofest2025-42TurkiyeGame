@@ -126,7 +126,112 @@
 				"sağ();"
 			]
 		},
-		"aaa": {
+		"7": {
+			"startPosition": {
+				"x": 1,
+				"y": 3
+			},
+			"sequence": [
+				"right",
+				"down",
+				"right",
+				"right",
+				"end"
+			],
+			"algorithm": [
+				"sağ();",
+				"eğer (m) {",
+				"aşağı();",
+				"}",
+				"sağ();",
+				"sağ();"
+			]
+		},
+		"8": {
+			"startPosition": {
+				"x": 1,
+				"y": 3
+			},
+			"sequence": [
+				"left",
+				"up",
+				"left",
+				"left",
+				"end"
+			],
+			"algorithm": [
+				"sol();",
+				"eğer (s) {",
+				"yukarı();",
+				"}",
+				"sol();",
+				"eğer (s) {",
+				"yukarı();",
+				"}",
+				"sol();"
+			]
+		},
+		"9": {
+			"startPosition": {
+				"x": 1,
+				"y": 3
+			},
+			"sequence": [
+				{
+					"loop": {
+						"iteration": 2,
+						"sequence": [
+							"up",
+							"right",
+							"right"
+						]
+					}
+				},
+				"end"
+			],
+			"algorithm": [
+				"tekrarla(2) {",
+				"eğer (m) {",
+				"yukarı();",
+				"}",
+				"sağ();",
+				"sağ();",
+				"}"
+			]
+		},
+		"10": {
+			"startPosition": {
+				"x": 1,
+				"y": 4
+			},
+			"sequence": [
+				"right",
+				"up",
+				"left",
+				"right",
+				"up",
+				"up",
+				"left",
+				"right",
+				"up",
+				"left",
+				"right",
+				"up",
+				"end"
+			],
+			"algorithm": [
+				"tekrarla(5) {",
+				"eğer (s) {",
+				"sol();",
+				"}",
+				"eğer (y) {",
+				"sağ();",
+				"}",
+				"yukarı();",
+				"}"
+			]
+		},
+		"template": {
 			"startPosition": {
 				"x": 0,
 				"y": 0
