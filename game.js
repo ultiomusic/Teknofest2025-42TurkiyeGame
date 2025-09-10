@@ -72,6 +72,12 @@ function parseAlgorithmText(level) {
 
 async function loadLevel(levelIndex) {
 	await loadLevelConfig();
+	const levelCount = Object.keys(levelConfig.levels).length;
+	if (levelIndex < 1) {
+		levelIndex = 1;
+	} else if (levelIndex > levelCount) {
+		levelIndex = levelCount;
+	}
 	const level = levelConfig.levels[levelIndex];
 	START = level.startPosition;
 	state.pos = { ...START };
@@ -109,6 +115,25 @@ function reset(hard = false) {
 	}
 	winEl.classList.remove("show");
 	boardEl.focus({ preventScroll: true });
+}
+
+function getLevel() {
+	const url_string = window.location.href;
+	const url = new URL(url_string);
+	level = url.searchParams.get("level");
+	return (level ? Number(level) : 1);
+}
+
+function setLevel(level) {
+	const url_string = window.location.href;
+	const url = new URL(url_string);
+	url.searchParams.set("level", level);
+	return (url);
+}
+
+function next() {
+	const newUrl = setLevel(getLevel() + 1);
+	window.location.href = newUrl;
 }
 
 function enableWinWindow() {
@@ -190,11 +215,13 @@ function initListeners() {
 	document.addEventListener("keydown", onKey);
 	document.getElementById("resetBtn").addEventListener("click", () => reset());
 	document.getElementById("focusBtn").addEventListener("click", () => boardEl.focus());
-	document.getElementById("nextBtn").addEventListener("click", () => reset());
+	document.getElementById("nextBtn").addEventListener("click", next);
+	document.getElementById("replayBtn").addEventListener("click", () => reset());
 }
 
 async function initGame() {
-	await loadLevel(2);
+	const level = getLevel();
+	await loadLevel(level);
 	placePlayer();
 	updateProgress();
 	boardEl.setAttribute("tabindex", "0");

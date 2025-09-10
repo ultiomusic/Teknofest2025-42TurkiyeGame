@@ -240,43 +240,6 @@
 				"yukarı();",
 				"}"
 			]
-		},
-		"template": {
-			"startPosition": {
-				"x": 0,
-				"y": 0
-			},
-			"sequence": [
-				"right",
-				"right",
-				"right",
-				"right",
-				{
-					"loop": {
-						"iteration": 6,
-						"sequence": [
-							"right",
-							"left",
-							"up",
-							"down"
-						]
-					}
-				},
-				"end"
-			],
-			"algorithm": [
-				"sağ();",
-				"sağ();",
-				"eğer () {",
-				"sağ();",
-				"}",
-				"sağ();",
-				"tekrarla(6)",
-				"{",
-				"sağ();",
-				"aşağı();",
-				"}"
-			]
 		}
 	}
 }
