@@ -71,7 +71,7 @@ function parseAlgorithmText(level) {
 
 async function loadLevel() {
 	await loadLevelConfig();
-	const level = levelConfig.levels[3];
+	const level = levelConfig.levels[4];
 	START = level.startPosition;
 	state.pos = { ...START };
 	parseSequence(level);
@@ -120,18 +120,10 @@ function win() {
 	PLAYER.addEventListener("transitionend", enableWinWindow);
 }
 
-function inBounds(x, y) {
-	const xBounds = x >= 0 && x < GRID;
-	const yBounds = y >= 0 && y < GRID;
-
-	return xBounds && yBounds;
-}
-
 function handleMove(dx, dy) {
 	if (!state.playing) return;
-	const nx = state.pos.x + dx;
-	const ny = state.pos.y + dy;
-	//if (!inBounds(nx, ny)) return; // Sınır dışına çıkma: Hamleyi yok say
+	const nx = (state.pos.x + dx) % GRID;
+	const ny = (state.pos.y + dy) % GRID;
 
 	let currentMove;
 	if (dx != 0)

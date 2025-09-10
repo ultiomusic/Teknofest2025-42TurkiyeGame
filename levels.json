@@ -62,6 +62,30 @@
 				"aşağı();"
 			]
 		},
+		"4": {
+			"startPosition": {
+				"x": 4,
+				"y": 2
+			},
+			"sequence": [
+				{
+					"loop": {
+						"iteration": 5,
+						"sequence": [
+							"right"
+						]
+					}
+				},
+				"down",
+				"end"
+			],
+			"algorithm": [
+				"tekrarla (5) {",
+				"sağ();",
+				"}",
+				"aşağı();"
+			]
+		},
 		"aaa": {
 			"startPosition": {
 				"x": 0,
