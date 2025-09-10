@@ -1,6 +1,7 @@
 {
 	"levels": {
 		"1": {
+			"name": "Sıralı Yol",
 			"startPosition": {
 				"x": 1,
 				"y": 3
@@ -18,6 +19,7 @@
 			]
 		},
 		"2": {
+			"name": "(level_2)",
 			"startPosition": {
 				"x": 3,
 				"y": 3
@@ -37,6 +39,7 @@
 			]
 		},
 		"3": {
+			"name": "(level_3)",
 			"startPosition": {
 				"x": 1,
 				"y": 2
@@ -63,6 +66,7 @@
 			]
 		},
 		"4": {
+			"name": "(level_4)",
 			"startPosition": {
 				"x": 4,
 				"y": 2
@@ -87,6 +91,7 @@
 			]
 		},
 		"5": {
+			"name": "(level_5)",
 			"startPosition": {
 				"x": 4,
 				"y": 2
@@ -106,6 +111,7 @@
 			]
 		},
 		"6": {
+			"name": "(level_6)",
 			"startPosition": {
 				"x": 1,
 				"y": 3
@@ -127,6 +133,7 @@
 			]
 		},
 		"7": {
+			"name": "(level_7)",
 			"startPosition": {
 				"x": 1,
 				"y": 3
@@ -148,6 +155,7 @@
 			]
 		},
 		"8": {
+			"name": "(level_8)",
 			"startPosition": {
 				"x": 1,
 				"y": 3
@@ -172,6 +180,7 @@
 			]
 		},
 		"9": {
+			"name": "(level_9)",
 			"startPosition": {
 				"x": 1,
 				"y": 3
@@ -200,6 +209,7 @@
 			]
 		},
 		"10": {
+			"name": "(level_10)",
 			"startPosition": {
 				"x": 1,
 				"y": 4

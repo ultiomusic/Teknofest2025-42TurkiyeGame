@@ -18,6 +18,7 @@ const boardEl = document.getElementById("board");
 const barEl = document.getElementById("bar");
 const countEl = document.getElementById("count");
 const winEl = document.getElementById("win");
+const levelText = document.getElementById("level-name");
 
 async function loadLevelConfig() {
 	const data = await fetch('./levels.json');
@@ -69,13 +70,14 @@ function parseAlgorithmText(level) {
 	}
 }
 
-async function loadLevel() {
+async function loadLevel(levelIndex) {
 	await loadLevelConfig();
-	const level = levelConfig.levels[10];
+	const level = levelConfig.levels[levelIndex];
 	START = level.startPosition;
 	state.pos = { ...START };
 	parseSequence(level);
 	parseAlgorithmText(level);
+	levelText.innerHTML = `<span class=\"dot\"></span>Level ${levelIndex} - ${level.name}`;
 }
 
 function placePlayer() {
@@ -192,7 +194,7 @@ function initListeners() {
 }
 
 async function initGame() {
-	await loadLevel();
+	await loadLevel(2);
 	placePlayer();
 	updateProgress();
 	boardEl.setAttribute("tabindex", "0");
