@@ -1,53 +1,324 @@
 {
 	"levels": {
 		"1": {
-			"start_position": {
-				"x": 10,
-				"y": 10
+			"name": "Sıralı Yol",
+			"startPosition": {
+				"x": 1,
+				"y": 3
+			},
+			"sequence": [
+				"right",
+				"right",
+				"right",
+				"end"
+			],
+			"algorithm": [
+				"sağ();",
+				"sağ();",
+				"sağ();"
+			],
+			"grid": [
+				{ "type": "normal", "x": 1, "y": 3},
+				{ "type": "normal", "x": 2, "y": 3},
+				{ "type": "normal", "x": 3, "y": 3},
+				{ "type": "normal", "x": 4, "y": 3}
+			]
+		},
+		"2": {
+			"name": "Başladığın Yer",
+			"startPosition": {
+				"x": 3,
+				"y": 3
+			},
+			"sequence": [
+				"left",
+				"down",
+				"right",
+				"up",
+				"end"
+			],
+			"algorithm": [
+				"sol();",
+				"aşağı();",
+				"sağ();",
+				"yukarı();"
+			],
+			"grid": [
+				{ "type": "normal", "x": 2, "y": 3},
+				{ "type": "normal", "x": 3, "y": 3},
+				{ "type": "normal", "x": 2, "y": 4},
+				{ "type": "normal", "x": 3, "y": 4}
+			]
+		},
+		"3": {
+			"name": "Döngüler",
+			"startPosition": {
+				"x": 1,
+				"y": 2
+			},
+			"sequence": [
+				"down",
+				{
+					"loop": {
+						"iteration": 3,
+						"sequence": [
+							"right"
+						]
+					}
+				},
+				"down",
+				"end"
+			],
+			"algorithm": [
+				"aşağı();",
+				"tekrarla (3) {",
+				"sağ();",
+				"}",
+				"aşağı();"
+			],
+			"grid": [
+				{ "type": "normal", "x": 1, "y": 2},
+				{ "type": "normal", "x": 1, "y": 3},
+				{ "type": "normal", "x": 2, "y": 3},
+				{ "type": "normal", "x": 3, "y": 3},
+				{ "type": "normal", "x": 4, "y": 3},
+				{ "type": "normal", "x": 4, "y": 4}
+			]
+		},
+		"4": {
+			"name": "Şaşırtmaca",
+			"startPosition": {
+				"x": 4,
+				"y": 2
 			},
 			"sequence": [
 				{
-					"type": "move",
-					"direction": "up"
+					"loop": {
+						"iteration": 5,
+						"sequence": [
+							"right"
+						]
+					}
 				},
+				"down",
+				"end"
+			],
+			"algorithm": [
+				"tekrarla (5) {",
+				"sağ();",
+				"}",
+				"aşağı();"
+			],
+			"grid": [
+				{ "type": "normal", "x": 4, "y": 2},
+				{ "type": "normal", "x": 5, "y": 2},
+				{ "type": "normal", "x": 6, "y": 2},
+				{ "type": "normal", "x": 0, "y": 2},
+				{ "type": "normal", "x": 1, "y": 2},
+				{ "type": "normal", "x": 2, "y": 2},
+				{ "type": "normal", "x": 2, "y": 3}
+			]
+		},
+		"5": {
+			"name": "Koşullar",
+			"startPosition": {
+				"x": 3,
+				"y": 3
+			},
+			"sequence": [
+				"down",
+				"left",
+				"up",
+				"end"
+			],
+			"algorithm": [
+				"aşağı();",
+				"eğer (s) {",
+				"sol();",
+				"}",
+				"yukarı();"
+			],
+			"grid": [
+				{ "type": "normal", "x": 3, "y": 3},
+				{ "type": "normal", "x": 3, "y": 4},
+				{ "type": "normal", "x": 2, "y": 4},
+				{ "type": "normal", "x": 2, "y": 3}
+			]
+		},
+		"6": {
+			"name": "Hareket Eden Bloklar",
+			"startPosition": {
+				"x": 1,
+				"y": 3
+			},
+			"sequence": [
+				"right",
+				"up",
+				"right",
+				"right",
+				"end"
+			],
+			"algorithm": [
+				"sağ();",
+				"eğer (s) {",
+				"yukarı();",
+				"}",
+				"sağ();",
+				"sağ();"
+			],
+			"grid": [
+				{ "type": "normal", "x": 1, "y": 3},
+				{ "type": "normal", "x": 2, "y": 3},
+				{ "type": "normal", "x": 2, "y": 2},
+				{ "type": "normal", "x": 3, "y": 2},
+				{ "type": "normal", "x": 4, "y": 2},
+				{ "type": "normal", "x": 2, "y": 4},
+				{ "type": "normal", "x": 3, "y": 4},
+				{ "type": "normal", "x": 4, "y": 4}
+			]
+		},
+		"7": {
+			"name": "Yol Ayrımı",
+			"startPosition": {
+				"x": 1,
+				"y": 3
+			},
+			"sequence": [
+				"right",
+				"down",
+				"right",
+				"right",
+				"end"
+			],
+			"algorithm": [
+				"sağ();",
+				"eğer (m) {",
+				"aşağı();",
+				"}",
+				"sağ();",
+				"sağ();"
+			],
+			"grid": [
+				{ "type": "normal", "x": 1, "y": 3},
+				{ "type": "normal", "x": 2, "y": 3},
+				{ "type": "normal", "x": 2, "y": 4},
+				{ "type": "normal", "x": 3, "y": 4},
+				{ "type": "normal", "x": 4, "y": 4}
+			]
+		},
+		"8": {
+			"name": "Dikkatli Ol",
+			"startPosition": {
+				"x": 5,
+				"y": 4
+			},
+			"sequence": [
+				"left",
+				"up",
+				"left",
+				"left",
+				"end"
+			],
+			"algorithm": [
+				"sol();",
+				"eğer (s) {",
+				"yukarı();",
+				"}",
+				"sol();",
+				"eğer (s) {",
+				"yukarı();",
+				"}",
+				"sol();"
+			],
+			"grid": [
+				{ "type": "normal", "x": 5, "y": 4},
+				{ "type": "normal", "x": 4, "y": 4},
+				{ "type": "normal", "x": 4, "y": 3},
+				{ "type": "normal", "x": 3, "y": 3},
+				{ "type": "normal", "x": 3, "y": 2},
+				{ "type": "normal", "x": 2, "y": 3}
+			]
+		},
+		"9": {
+			"name": "Her Şey İç İçe",
+			"startPosition": {
+				"x": 1,
+				"y": 4
+			},
+			"sequence": [
 				{
-					"type": "move",
-					"direction": "right"
+					"loop": {
+						"iteration": 2,
+						"sequence": [
+							"up",
+							"right",
+							"right"
+						]
+					}
 				},
-				{
-					"type": "move",
-					"direction": "down"
-				},
-				{
-					"type": "move",
-					"direction": "left"
-				},
-				{
-					"type": "block",
-					"direction": "up"
-				},
-				{
-					"type": "block",
-					"direction": "right"
-				},
-				{
-					"type": "block",
-					"direction": "down"
-				},
-				{
-					"type": "block",
-					"direction": "left"
-				},
-				{
-					"type": "loop",
-					"iterations": 6,
-					"sequence": [
-						{
-							"type": "move",
-							"direction": "left"
-						}
-					]
-				}
+				"end"
+			],
+			"algorithm": [
+				"tekrarla(2) {",
+				"eğer (m) {",
+				"yukarı();",
+				"}",
+				"sağ();",
+				"sağ();",
+				"}"
+			],
+			"grid": [
+				{ "type": "normal", "x": 1, "y": 4},
+				{ "type": "normal", "x": 1, "y": 3},
+				{ "type": "normal", "x": 2, "y": 3},
+				{ "type": "normal", "x": 3, "y": 3},
+				{ "type": "normal", "x": 3, "y": 2},
+				{ "type": "normal", "x": 4, "y": 2},
+				{ "type": "normal", "x": 5, "y": 2}
+			]
+		},
+		"10": {
+			"name": "Bölüm Sonu Canavarı",
+			"startPosition": {
+				"x": 2,
+				"y": 4
+			},
+			"sequence": [
+				"right",
+				"up",
+				"left",
+				"right",
+				"up",
+				"up",
+				"left",
+				"right",
+				"up",
+				"left",
+				"right",
+				"up",
+				"end"
+			],
+			"algorithm": [
+				"tekrarla(5) {",
+				"eğer (s) {",
+				"sol();",
+				"}",
+				"eğer (y) {",
+				"sağ();",
+				"}",
+				"yukarı();",
+				"}"
+			],
+			"grid": [
+				{ "type": "normal", "x": 2, "y": 4},
+				{ "type": "normal", "x": 3, "y": 4},
+				{ "type": "normal", "x": 2, "y": 3},
+				{ "type": "normal", "x": 3, "y": 3},
+				{ "type": "normal", "x": 3, "y": 2},
+				{ "type": "normal", "x": 2, "y": 1},
+				{ "type": "normal", "x": 3, "y": 1},
+				{ "type": "normal", "x": 2, "y": 0},
+				{ "type": "normal", "x": 3, "y": 0}
 			]
 		}
 	}
