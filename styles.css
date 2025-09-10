@@ -63,6 +63,18 @@ body {
   position: relative;
   overflow: hidden;
 }
+.cell.empty {
+	visibility: hidden;
+}
+.cell.yellow {
+	background: rgb(245, 232, 122);
+}
+.cell.blue {
+	background: rgb(122, 222, 245);
+}
+.cell.red {
+	background: rgb(245, 122, 122);
+}
 .cell.path {
   outline: 2px dashed rgba(134, 239, 172, 0.25);
 }
