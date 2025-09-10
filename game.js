@@ -70,12 +70,12 @@ function parseAlgorithmText(level) {
 	}
 }
 
+function levelCount() {
+	return (Object.keys(levelConfig.levels).length);
+}
+
 async function loadLevel(levelIndex) {
 	await loadLevelConfig();
-	const levelCount = Object.keys(levelConfig.levels).length;
-	if (levelIndex < 1 || levelIndex > levelCount) {
-		levelIndex = 1;
-	}
 	const level = levelConfig.levels[levelIndex];
 	START = level.startPosition;
 	state.pos = { ...START };
@@ -84,7 +84,7 @@ async function loadLevel(levelIndex) {
 	const levelString = `Level ${levelIndex} • ${level.name}`;
 	levelText.innerHTML = `<span class=\"dot\"></span>${levelString}`;
 	document.title = levelString;
-	if (levelIndex == levelCount)
+	if (levelIndex == levelCount())
 		document.getElementById("nextBtn").innerHTML = "İlk Level'a Dön";
 }
 
@@ -134,7 +134,8 @@ function setLevel(level) {
 }
 
 function next() {
-	const newUrl = setLevel(getLevel() + 1);
+	const levelIndex = getLevel();
+	const newUrl = setLevel(levelIndex == levelCount() ? 1 : levelIndex + 1);
 	window.location.href = newUrl;
 }
 
