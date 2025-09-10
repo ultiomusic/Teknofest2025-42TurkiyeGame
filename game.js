@@ -71,7 +71,7 @@ function parseAlgorithmText(level) {
 
 async function loadLevel() {
 	await loadLevelConfig();
-	const level = levelConfig.levels[4];
+	const level = levelConfig.levels[6];
 	START = level.startPosition;
 	state.pos = { ...START };
 	parseSequence(level);

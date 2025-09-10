@@ -86,6 +86,46 @@
 				"aşağı();"
 			]
 		},
+		"5": {
+			"startPosition": {
+				"x": 4,
+				"y": 2
+			},
+			"sequence": [
+				"down",
+				"left",
+				"up",
+				"end"
+			],
+			"algorithm": [
+				"aşağı();",
+				"eğer (s) {",
+				"sol();",
+				"}",
+				"yukarı();"
+			]
+		},
+		"6": {
+			"startPosition": {
+				"x": 1,
+				"y": 3
+			},
+			"sequence": [
+				"right",
+				"up",
+				"right",
+				"right",
+				"end"
+			],
+			"algorithm": [
+				"sağ();",
+				"eğer (s) {",
+				"yukarı();",
+				"}",
+				"sağ();",
+				"sağ();"
+			]
+		},
 		"aaa": {
 			"startPosition": {
 				"x": 0,
