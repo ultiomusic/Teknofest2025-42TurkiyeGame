@@ -74,11 +74,33 @@ function levelCount() {
 	return (Object.keys(levelConfig.levels).length);
 }
 
+function buildGrid(level) {
+	let x = 0;
+	let y = 0;
+
+	while (y < GRID) {
+		while (x < GRID) {
+			const cell = level.grid.some(cell => cell.x === x && cell.y === y && cell.type === "normal");
+			const cellDiv = document.createElement("div");
+			if (cell) {
+				cellDiv.className = "cell";
+			} else {
+				cellDiv.className = "cell empty";
+			}
+			boardEl.appendChild(cellDiv);
+			x++;
+		}
+		x = 0;
+		y++;
+	}
+}
+
 async function loadLevel(levelIndex) {
 	await loadLevelConfig();
 	const level = levelConfig.levels[levelIndex];
 	START = level.startPosition;
 	state.pos = { ...START };
+	buildGrid(level);
 	parseSequence(level);
 	parseAlgorithmText(level);
 	const levelString = `Level ${levelIndex} • ${level.name}`;

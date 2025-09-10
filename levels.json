@@ -16,6 +16,12 @@
 				"sağ();",
 				"sağ();",
 				"sağ();"
+			],
+			"grid": [
+				{ "type": "normal", "x": 1, "y": 3},
+				{ "type": "normal", "x": 2, "y": 3},
+				{ "type": "normal", "x": 3, "y": 3},
+				{ "type": "normal", "x": 4, "y": 3}
 			]
 		},
 		"2": {

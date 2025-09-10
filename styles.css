@@ -143,6 +143,7 @@ body {
   place-items: center;
   transform: translate(0, 0);
   transition: transform 0.18s ease;
+  z-index: 1;
 }
 .player::before {
   content: "";
