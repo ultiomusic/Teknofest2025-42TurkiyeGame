@@ -73,17 +73,19 @@ function parseAlgorithmText(level) {
 async function loadLevel(levelIndex) {
 	await loadLevelConfig();
 	const levelCount = Object.keys(levelConfig.levels).length;
-	if (levelIndex < 1) {
+	if (levelIndex < 1 || levelIndex > levelCount) {
 		levelIndex = 1;
-	} else if (levelIndex > levelCount) {
-		levelIndex = levelCount;
 	}
 	const level = levelConfig.levels[levelIndex];
 	START = level.startPosition;
 	state.pos = { ...START };
 	parseSequence(level);
 	parseAlgorithmText(level);
-	levelText.innerHTML = `<span class=\"dot\"></span>Level ${levelIndex} - ${level.name}`;
+	const levelString = `Level ${levelIndex} • ${level.name}`;
+	levelText.innerHTML = `<span class=\"dot\"></span>${levelString}`;
+	document.title = levelString;
+	if (levelIndex == levelCount)
+		document.getElementById("nextBtn").innerHTML = "İlk Level'a Dön";
 }
 
 function placePlayer() {
