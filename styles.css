@@ -277,7 +277,7 @@ h1 .dot {
   display: none;
   align-items: center;
   justify-content: center;
-  z-index: 0;
+  z-index: 1;
 }
 .overlay.show {
   display: flex;
