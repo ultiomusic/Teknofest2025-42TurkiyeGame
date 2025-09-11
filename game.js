@@ -80,13 +80,18 @@ function buildGrid(level) {
 
 	while (y < GRID) {
 		while (x < GRID) {
-			const cell = level.grid.some(cell => cell.x === x && cell.y === y && cell.type === "normal");
 			const cellDiv = document.createElement("div");
-			if (cell) {
-				cellDiv.className = "cell";
-			} else {
-				cellDiv.className = "cell empty";
+			cellDiv.className = "cell";
+			let cellClass;
+			for (let i = 0; i < level.grid.length; i++) {
+				const cell = level.grid[i];
+				if (cell.x === x && cell.y === y) {
+					cellClass = cell.type;
+				}
 			}
+			if (!cellClass)
+				cellClass = "empty";
+			cellDiv.classList.add(cellClass);
 			boardEl.appendChild(cellDiv);
 			x++;
 		}
