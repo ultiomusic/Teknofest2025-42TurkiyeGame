@@ -282,6 +282,30 @@ h1 .dot {
 .overlay.show {
   display: flex;
 }
+
+.next-timer {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  display: none;
+}
+.next-timer.show {
+  display: block;
+}
+.next-timer i {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--accent);
+  transition: width 3s linear;
+}
+
 .card {
   background: #0b1220;
   border: 1px solid #1f2a44;

@@ -13,11 +13,14 @@ let state = {
 	playing: true,
 };
 
+let nextLevelTimeout;
+
 const PLAYER = document.getElementById("player");
 const boardEl = document.getElementById("board");
 const barEl = document.getElementById("bar");
 const countEl = document.getElementById("count");
 const winEl = document.getElementById("win");
+const nextTimerEl = document.getElementById("nextTimer");
 const levelText = document.getElementById("level-name");
 const themeToggle = document.getElementById("themeToggle");
 
@@ -113,8 +116,6 @@ async function loadLevel(levelIndex) {
 	const levelString = `Level ${levelIndex} • ${level.name}`;
 	levelText.innerHTML = `<span class=\"dot\"></span>${levelString}`;
 	document.title = levelString;
-	if (levelIndex == levelCount())
-		document.getElementById("nextBtn").innerHTML = "İlk Level'a Dön";
 }
 
 function placePlayer() {
@@ -145,6 +146,9 @@ function reset(hard = false) {
 		setTimeout(() => boardEl.classList.remove("shake"), 400);
 	}
 	winEl.classList.remove("show");
+	nextTimerEl.classList.remove("show");
+	nextTimerEl.querySelector("i").style.width = "100%";
+	clearTimeout(nextLevelTimeout);
 	boardEl.focus({ preventScroll: true });
 }
 
@@ -170,6 +174,15 @@ function next() {
 
 function enableWinWindow() {
 	winEl.classList.add("show");
+	nextTimerEl.classList.add("show");
+	const bar = nextTimerEl.querySelector("i");
+	bar.style.width = "100%";
+	setTimeout(() => {
+			bar.style.width = "0%";
+	}, 50);
+	nextLevelTimeout = setTimeout(() => {
+			next();
+	}, 3050);
 	PLAYER.removeEventListener("transitionend", enableWinWindow);
 }
 
@@ -202,11 +215,11 @@ function handleMove(dx, dy) {
 		state.step++;
 		placePlayer();
 		updateProgress();
-		next = SEQ[state.step];
-		if (next && next === "end") {
-			// Son etiket F'e ulaşıldı
-			win();
-		}
+		const nextMove = SEQ[state.step];
+		if (nextMove && nextMove === "end") {
+				// Son etiket F'e ulaşıldı
+				win();
+		}	
 	} else {
 		// Yanlış kare -> Reset
 		reset(true);
@@ -264,9 +277,8 @@ function initListeners() {
 	document.addEventListener("keydown", onKey);
 	document.getElementById("resetBtn").addEventListener("click", () => reset());
 	document.getElementById("focusBtn").addEventListener("click", () => boardEl.focus());
-	document.getElementById("nextBtn").addEventListener("click", next);
 	document.getElementById("replayBtn").addEventListener("click", () => reset());
-	themeToggle.addEventListener("click", toggleTheme);
+	themeToggle.addEventListener("click", toggleTheme);	
 }
 
 async function initGame() {
