@@ -19,6 +19,7 @@ const barEl = document.getElementById("bar");
 const countEl = document.getElementById("count");
 const winEl = document.getElementById("win");
 const levelText = document.getElementById("level-name");
+const themeToggle = document.getElementById("themeToggle");
 
 async function loadLevelConfig() {
 	const data = await fetch('./levels.json');
@@ -236,12 +237,30 @@ function onKey(e) {
 	}
 }
 
+
+function toggleTheme() {
+	const isLight = document.body.classList.toggle("light");
+	themeToggle.textContent = isLight ? "🌙" : "🌞";
+	localStorage.setItem("theme", isLight ? "light" : "dark");
+}
+
+function applySavedTheme() {
+	const saved = localStorage.getItem("theme");
+	if (saved === "light") {
+			document.body.classList.add("light");
+			themeToggle.textContent = "🌙";
+	} else {
+			themeToggle.textContent = "🌞";
+	}
+}
+
 function initListeners() {
 	document.addEventListener("keydown", onKey);
 	document.getElementById("resetBtn").addEventListener("click", () => reset());
 	document.getElementById("focusBtn").addEventListener("click", () => boardEl.focus());
 	document.getElementById("nextBtn").addEventListener("click", next);
 	document.getElementById("replayBtn").addEventListener("click", () => reset());
+	themeToggle.addEventListener("click", toggleTheme);
 }
 
 async function initGame() {
@@ -254,5 +273,6 @@ async function initGame() {
 	boardEl.focus({ preventScroll: true });
 }
 
+applySavedTheme();
 initListeners();
 initGame();
