@@ -67,16 +67,16 @@ body {
 	visibility: hidden;
 }
 .cell.yellow {
-	background: rgb(245, 232, 122);
+	background: rgb(245, 232, 122) !important;
 }
 .cell.blue {
-	background: rgb(122, 222, 245);
+	background: rgb(122, 222, 245) !important;
 }
 .cell.red {
-	background: rgb(245, 122, 122);
+	background: rgb(245, 122, 122) !important;
 }
 .cell.green {
-	background: rgb(66, 147, 58);
+	background: rgb(66, 147, 58) !important;
 }
 .cell.path {
   outline: 2px dashed rgba(134, 239, 172, 0.25);
