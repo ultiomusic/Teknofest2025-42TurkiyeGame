@@ -75,6 +75,9 @@ body {
 .cell.red {
 	background: rgb(245, 122, 122);
 }
+.cell.green {
+	background: rgb(66, 147, 58);
+}
 .cell.path {
   outline: 2px dashed rgba(134, 239, 172, 0.25);
 }
