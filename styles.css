@@ -79,7 +79,11 @@ body {
 	background: rgb(66, 147, 58) !important;
 }
 .cell.path {
-  outline: 2px dashed rgba(134, 239, 172, 0.25);
+ 	outline: 2px dashed rgba(134, 239, 172, 0.25);
+	position: absolute;
+  	transition: transform 0.18s ease;
+	width: 55px;
+	height: 55px;
 }
 .cell .badge {
   position: absolute;

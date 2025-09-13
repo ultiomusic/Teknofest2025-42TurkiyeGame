@@ -13,6 +13,10 @@ let state = {
 	playing: true,
 };
 
+let BLOCKS;
+let PATH_BLOCKS = [];
+let path_index = 0;
+
 let nextLevelTimeout;
 
 const PLAYER = document.getElementById("player");
@@ -80,19 +84,37 @@ function levelCount() {
 	return (Object.keys(levelConfig.levels).length);
 }
 
+function placeAbsoluteDiv(div, pos) {
+	const tx = `calc(${pos.x} * (var(--cell) + var(--gap)) + 5px)`;
+	const ty = `calc(${pos.y} * (var(--cell) + var(--gap)) + 5px)`;
+	div.style.transform = `translate(${tx}, ${ty})`;
+}
+
 function buildGrid(level) {
 	let x = 0;
 	let y = 0;
 
+	BLOCKS = level.grid;
 	while (y < GRID) {
 		while (x < GRID) {
 			const cellDiv = document.createElement("div");
 			cellDiv.className = "cell";
 			let cellClass;
-			for (let i = 0; i < level.grid.length; i++) {
-				const cell = level.grid[i];
+			for (let i = 0; i < BLOCKS.length; i++) {
+				const cell = BLOCKS[i];
 				if (cell.x === x && cell.y === y) {
-					cellClass = cell.type;
+					if (cell.type === "path") {
+						const pathDiv = document.createElement("div");
+						pathDiv.className = "cell";
+						pathDiv.classList.add("path");
+						boardEl.appendChild(pathDiv);
+						PATH_BLOCKS.push({ pathDiv, cell });
+						placeAbsoluteDiv(pathDiv, { x, y });
+						path_index++;
+					} else {
+						cellClass = cell.type;
+					}
+					break;
 				}
 			}
 			if (!cellClass) {
@@ -105,6 +127,7 @@ function buildGrid(level) {
 		x = 0;
 		y++;
 	}
+	path_index = PATH_BLOCKS.length - 1;
 }
 
 async function loadLevel(levelIndex) {
@@ -120,12 +143,6 @@ async function loadLevel(levelIndex) {
 	document.title = levelString;
 }
 
-function placePlayer() {
-	const tx = `calc(${state.pos.x} * (var(--cell) + var(--gap)) + 5px)`;
-	const ty = `calc(${state.pos.y} * (var(--cell) + var(--gap)) + 5px)`;
-	PLAYER.style.transform = `translate(${tx}, ${ty})`;
-}
-
 function updateProgress() {
 	const total = SEQ.length - 1;
 	const done = Math.min(state.step, total);
@@ -138,7 +155,12 @@ function reset(hard = false) {
 	state.pos = { ...START };
 	state.step = 0;
 	state.playing = true;
-	placePlayer();
+	path_index = PATH_BLOCKS.length - 1;
+	placeAbsoluteDiv(PLAYER, state.pos);
+	for (let i = 0; i < PATH_BLOCKS.length; i++) {
+		const block = PATH_BLOCKS[i];
+		placeAbsoluteDiv(block.pathDiv, { x: block.cell.x, y: block.cell.y});
+	}
 	updateProgress();
 	if (hard) {
 		boardEl.classList.remove("shake");
@@ -180,10 +202,10 @@ function enableWinWindow() {
 	const bar = nextTimerEl.querySelector("i");
 	bar.style.width = "100%";
 	setTimeout(() => {
-			bar.style.width = "0%";
+		bar.style.width = "0%";
 	}, 50);
 	nextLevelTimeout = setTimeout(() => {
-			next();
+		next();
 	}, 3050);
 	PLAYER.removeEventListener("transitionend", enableWinWindow);
 }
@@ -214,14 +236,21 @@ function handleMove(dx, dy) {
 	if (expect && expect === currentMove) {
 		state.pos.x = nx;
 		state.pos.y = ny;
+		placeAbsoluteDiv(PLAYER, state.pos);
+		if (BLOCKS && BLOCKS[state.step].type === "blue") {
+			const path_block = PATH_BLOCKS[path_index];
+			if (path_block) {
+				placeAbsoluteDiv(path_block.pathDiv, { x: path_block.cell.x + dx, y: path_block.cell.y + dy });
+				path_index--;
+			}
+		}
 		state.step++;
-		placePlayer();
 		updateProgress();
 		const nextMove = SEQ[state.step];
 		if (nextMove && nextMove === "end") {
-				// Son etiket F'e ulaşıldı
-				win();
-		}	
+			// Son etiket F'e ulaşıldı
+			win();
+		}
 	} else {
 		// Yanlış kare -> Reset
 		reset(true);
@@ -268,10 +297,10 @@ function toggleTheme() {
 function applySavedTheme() {
 	const saved = localStorage.getItem("theme");
 	if (saved === "light") {
-			document.body.classList.add("light");
-			themeToggle.textContent = "🌙";
+		document.body.classList.add("light");
+		themeToggle.textContent = "🌙";
 	} else {
-			themeToggle.textContent = "🌞";
+		themeToggle.textContent = "🌞";
 	}
 }
 
@@ -280,13 +309,13 @@ function initListeners() {
 	document.getElementById("resetBtn").addEventListener("click", () => reset());
 	document.getElementById("focusBtn").addEventListener("click", () => boardEl.focus());
 	document.getElementById("replayBtn").addEventListener("click", () => reset());
-	themeToggle.addEventListener("click", toggleTheme);	
+	themeToggle.addEventListener("click", toggleTheme);
 }
 
 async function initGame() {
 	const level = getLevel();
 	await loadLevel(level);
-	placePlayer();
+	placeAbsoluteDiv(PLAYER, state.pos);
 	updateProgress();
 	boardEl.setAttribute("tabindex", "0");
 	boardEl.addEventListener("click", () => boardEl.focus());

@@ -146,7 +146,7 @@
 			]
 		},
 		"6": {
-			"name": "Hareket Eden Bloklar",
+			"name": "Yol Ayrımı",
 			"startPosition": {
 				"x": 1,
 				"y": 3
@@ -178,7 +178,7 @@
 			]
 		},
 		"7": {
-			"name": "Yol Ayrımı",
+			"name": "Hareket Eden Bloklar",
 			"startPosition": {
 				"x": 1,
 				"y": 3
@@ -202,7 +202,7 @@
 				{ "type": "normal", "x": 1, "y": 3},
 				{ "type": "blue", "x": 2, "y": 3},
 				{ "type": "normal", "x": 2, "y": 4},
-				{ "type": "normal", "x": 3, "y": 4},
+				{ "type": "path", "x": 3, "y": 3},
 				{ "type": "normal", "x": 4, "y": 4}
 			]
 		},
@@ -269,11 +269,11 @@
 			],
 			"grid": [
 				{ "type": "blue", "x": 1, "y": 4},
+				{ "type": "path", "x": 2, "y": 4},
 				{ "type": "normal", "x": 1, "y": 3},
-				{ "type": "normal", "x": 2, "y": 3},
 				{ "type": "blue", "x": 3, "y": 3},
+				{ "type": "path", "x": 4, "y": 3},
 				{ "type": "normal", "x": 3, "y": 2},
-				{ "type": "normal", "x": 4, "y": 2},
 				{ "type": "normal", "x": 5, "y": 2}
 			]
 		},
