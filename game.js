@@ -54,19 +54,20 @@ function parseAlgorithmText(level) {
 		return;
 	}
 
-	let insert_tab;
+	let tab_indent = 0;
 	for (let index = 0; index < level.algorithm.length; index++) {
 		const element = level.algorithm[index];
 
 		if (element[element.length - 1] === '{') {
-			insert_tab = 1;
+			tab_indent += 1;
 		} else if (element[0] === '}') {
-			insert_tab = 0;
+			tab_indent -= 1;
 		}
 		const p = document.createElement("p");
 		const text = document.createTextNode(element);
-		if (insert_tab && element[element.length - 1] !== '{')
-			p.innerHTML += "&emsp;";
+		if (tab_indent > 0) {
+			p.innerHTML += "&emsp;".repeat(tab_indent);
+		}
 		p.appendChild(text);
 		algoEl.appendChild(p);
 		if (index + 1 != level.algorithm.length)
