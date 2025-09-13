@@ -131,9 +131,20 @@ body {
 	width: 20px;
 	height: 20px;
 	margin: 0 5px;
-	background-color: #60a5fa;
 	vertical-align: middle;
-	border: 2px solid orange;
+	border-radius: 25%;
+}
+
+#algorithm .algo-block.blue {
+	background-color: #60a5fa;
+}
+
+#algorithm .algo-block.yellow {
+	background-color: #faf760;
+}
+
+#algorithm .algo-block.green {
+	background-color: #60fa6d;
 }
 
 .player {
