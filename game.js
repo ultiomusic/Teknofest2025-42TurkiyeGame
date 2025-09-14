@@ -19,7 +19,7 @@ let path_index = 0;
 
 let nextLevelTimeout;
 
-const PLAYER = document.getElementById("player");
+let PLAYER;
 const boardEl = document.getElementById("board");
 const barEl = document.getElementById("bar");
 const countEl = document.getElementById("count");
@@ -128,6 +128,10 @@ function buildGrid(level) {
 		y++;
 	}
 	path_index = PATH_BLOCKS.length - 1;
+	PLAYER = document.createElement("div");
+	PLAYER.id = "player";
+	PLAYER.className = "player";
+	boardEl.appendChild(PLAYER);
 }
 
 async function loadLevel(levelIndex) {
@@ -237,7 +241,7 @@ function handleMove(dx, dy) {
 		state.pos.x = nx;
 		state.pos.y = ny;
 		placeAbsoluteDiv(PLAYER, state.pos);
-		if (BLOCKS && BLOCKS[state.step].type === "blue") {
+		if (BLOCKS != null && BLOCKS[state.step] != null && BLOCKS[state.step].type === "blue") {
 			const path_block = PATH_BLOCKS[path_index];
 			if (path_block) {
 				placeAbsoluteDiv(path_block.pathDiv, { x: path_block.cell.x + dx, y: path_block.cell.y + dy });
