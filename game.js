@@ -230,7 +230,7 @@ function enableWinWindow() {
 	}, 50);
 	nextLevelTimeout = setTimeout(() => {
 		next();
-	}, 3050);
+	}, 1050);
 	PLAYER.removeEventListener("transitionend", enableWinWindow);
 }
 
@@ -339,7 +339,6 @@ function initListeners() {
 	document.addEventListener("keydown", onKey);
 	document.getElementById("resetBtn").addEventListener("click", () => reset());
 	document.getElementById("focusBtn").addEventListener("click", () => boardEl.focus());
-	document.getElementById("replayBtn").addEventListener("click", () => reset());
 	themeToggle.addEventListener("click", toggleTheme);
 }
 
