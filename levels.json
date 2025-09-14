@@ -4,7 +4,7 @@
 			"name": "Sıralı Yol",
 			"startPosition": {
 				"x": 1,
-				"y": 3
+				"y": 2
 			},
 			"sequence": [
 				"right",
@@ -17,18 +17,19 @@
 				"sağ();",
 				"sağ();"
 			],
+			"gridSize": { "x": 6, "y": 5 },
 			"grid": [
-				{ "type": "normal", "x": 1, "y": 3},
-				{ "type": "normal", "x": 2, "y": 3},
-				{ "type": "normal", "x": 3, "y": 3},
-				{ "type": "normal", "x": 4, "y": 3}
+				{ "type": "normal", "x": 1, "y": 2},
+				{ "type": "normal", "x": 2, "y": 2},
+				{ "type": "normal", "x": 3, "y": 2},
+				{ "type": "normal", "x": 4, "y": 2}
 			]
 		},
 		"2": {
 			"name": "Başladığın Yer",
 			"startPosition": {
 				"x": 3,
-				"y": 3
+				"y": 2
 			},
 			"sequence": [
 				"left",
@@ -43,18 +44,19 @@
 				"sağ();",
 				"yukarı();"
 			],
+			"gridSize": { "x": 6, "y": 6 },
 			"grid": [
+				{ "type": "normal", "x": 2, "y": 2},
+				{ "type": "normal", "x": 3, "y": 2},
 				{ "type": "normal", "x": 2, "y": 3},
-				{ "type": "normal", "x": 3, "y": 3},
-				{ "type": "normal", "x": 2, "y": 4},
-				{ "type": "normal", "x": 3, "y": 4}
+				{ "type": "normal", "x": 3, "y": 3}
 			]
 		},
 		"3": {
 			"name": "Döngüler",
 			"startPosition": {
 				"x": 1,
-				"y": 2
+				"y": 1
 			},
 			"sequence": [
 				"down",
@@ -76,20 +78,21 @@
 				"}",
 				"aşağı();"
 			],
+			"gridSize": { "x": 6, "y": 5 },
 			"grid": [
+				{ "type": "normal", "x": 1, "y": 1},
+				{ "type": "normal", "x": 2, "y": 2},
 				{ "type": "normal", "x": 1, "y": 2},
-				{ "type": "normal", "x": 1, "y": 3},
-				{ "type": "normal", "x": 2, "y": 3},
-				{ "type": "normal", "x": 3, "y": 3},
-				{ "type": "normal", "x": 4, "y": 3},
-				{ "type": "normal", "x": 4, "y": 4}
+				{ "type": "normal", "x": 3, "y": 2},
+				{ "type": "normal", "x": 4, "y": 2},
+				{ "type": "normal", "x": 4, "y": 3}
 			]
 		},
 		"4": {
 			"name": "Şaşırtmaca",
 			"startPosition": {
-				"x": 4,
-				"y": 2
+				"x": 1,
+				"y": 1
 			},
 			"sequence": [
 				{
@@ -109,21 +112,19 @@
 				"}",
 				"aşağı();"
 			],
+			"gridSize": { "x": 5, "y": 4 },
 			"grid": [
-				{ "type": "normal", "x": 4, "y": 2},
-				{ "type": "normal", "x": 5, "y": 2},
-				{ "type": "normal", "x": 6, "y": 2},
-				{ "type": "normal", "x": 0, "y": 2},
-				{ "type": "normal", "x": 1, "y": 2},
-				{ "type": "normal", "x": 2, "y": 2},
-				{ "type": "normal", "x": 2, "y": 3}
+				{ "type": "normal", "x": 1, "y": 1},
+				{ "type": "normal", "x": 2, "y": 1},
+				{ "type": "normal", "x": 3, "y": 1},
+				{ "type": "normal", "x": 3, "y": 2}
 			]
 		},
 		"5": {
 			"name": "Koşullar",
 			"startPosition": {
-				"x": 3,
-				"y": 3
+				"x": 2,
+				"y": 1
 			},
 			"sequence": [
 				"down",
@@ -138,11 +139,12 @@
 				"}",
 				"yukarı();"
 			],
+			"gridSize": { "x": 4, "y": 4 },
 			"grid": [
-				{ "type": "normal", "x": 3, "y": 3},
-				{ "type": "yellow", "x": 3, "y": 4},
-				{ "type": "normal", "x": 2, "y": 4},
-				{ "type": "normal", "x": 2, "y": 3}
+				{ "type": "normal", "x": 2, "y": 1},
+				{ "type": "yellow", "x": 2, "y": 2},
+				{ "type": "normal", "x": 1, "y": 1},
+				{ "type": "normal", "x": 1, "y": 2}
 			]
 		},
 		"6": {
@@ -166,6 +168,7 @@
 				"sağ();",
 				"sağ();"
 			],
+			"gridSize": { "x": 6, "y": 6 },
 			"grid": [
 				{ "type": "normal", "x": 1, "y": 3},
 				{ "type": "yellow", "x": 2, "y": 3},
@@ -181,7 +184,7 @@
 			"name": "Hareket Eden Bloklar",
 			"startPosition": {
 				"x": 1,
-				"y": 3
+				"y": 2
 			},
 			"sequence": [
 				"right",
@@ -198,19 +201,20 @@
 				"sağ();",
 				"sağ();"
 			],
+			"gridSize": { "x": 6, "y": 6 },
 			"grid": [
-				{ "type": "normal", "x": 1, "y": 3},
-				{ "type": "blue", "x": 2, "y": 3},
-				{ "type": "normal", "x": 2, "y": 4},
-				{ "type": "path", "x": 3, "y": 3},
-				{ "type": "normal", "x": 4, "y": 4}
+				{ "type": "normal", "x": 1, "y": 2},
+				{ "type": "blue", "x": 2, "y": 2},
+				{ "type": "normal", "x": 2, "y": 3},
+				{ "type": "path", "x": 3, "y": 2},
+				{ "type": "normal", "x": 4, "y": 3}
 			]
 		},
 		"8": {
 			"name": "Dikkatli Ol",
 			"startPosition": {
-				"x": 5,
-				"y": 4
+				"x": 4,
+				"y": 3
 			},
 			"sequence": [
 				"left",
@@ -230,13 +234,14 @@
 				"}",
 				"sol();"
 			],
+			"gridSize": { "x": 6, "y": 6 },
 			"grid": [
-				{ "type": "normal", "x": 5, "y": 4},
-				{ "type": "yellow", "x": 4, "y": 4},
 				{ "type": "normal", "x": 4, "y": 3},
-				{ "type": "red", "x": 3, "y": 3},
+				{ "type": "yellow", "x": 3, "y": 3},
 				{ "type": "normal", "x": 3, "y": 2},
-				{ "type": "normal", "x": 2, "y": 3}
+				{ "type": "red", "x": 2, "y": 2},
+				{ "type": "normal", "x": 2, "y": 1},
+				{ "type": "normal", "x": 1, "y": 2}
 			]
 		},
 		"9": {
@@ -267,6 +272,7 @@
 				"sağ();",
 				"}"
 			],
+			"gridSize": { "x": 7, "y": 7 },
 			"grid": [
 				{ "type": "blue", "x": 1, "y": 4},
 				{ "type": "path", "x": 2, "y": 4},
@@ -309,6 +315,7 @@
 				"yukarı();",
 				"}"
 			],
+			"gridSize": { "x": 6, "y": 5 },
 			"grid": [
 				{ "type": "green", "x": 2, "y": 4},
 				{ "type": "yellow", "x": 3, "y": 4},

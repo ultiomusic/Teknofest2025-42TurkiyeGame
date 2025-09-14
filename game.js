@@ -1,6 +1,3 @@
-const GRID = 6;
-const PLAYER_OFFSET = { x: 5, y: 5 };
-
 let levelConfig = {};
 
 let START = {};
@@ -97,8 +94,14 @@ function buildGrid(level) {
 	let y = 0;
 
 	BLOCKS = level.grid;
-	while (y < GRID) {
-		while (x < GRID) {
+	const gridSize = level.gridSize;
+	boardEl.style.width = `calc(var(--cell) * ${gridSize.x} + var(--gap) * ${gridSize.x + 1})`;
+	boardEl.style.height = `calc(var(--cell) * ${gridSize.y} + var(--gap) * ${gridSize.y + 1})`;
+	boardEl.style.gridTemplateColumns = `repeat(${gridSize.x}, var(--cell))`;
+	boardEl.style.gridTemplateRows = `repeat(${gridSize.y}, var(--cell))`;
+
+	while (y < gridSize.y) {
+		while (x < gridSize.x) {
 			const cellDiv = document.createElement("div");
 			cellDiv.className = "cell";
 			let cellClass;
