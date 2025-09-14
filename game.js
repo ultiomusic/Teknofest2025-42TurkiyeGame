@@ -163,11 +163,14 @@ async function loadLevel(levelIndex) {
 	parseSequence(level);
 	parseAlgorithmText(level);
 	const levelString = `Level ${levelIndex} • ${level.name}`;
-	levelText.innerHTML = `<span class=\"dot\"></span>${levelString}`;
+	if (levelText) {
+		levelText.innerHTML = `<span class=\"dot\"></span>${levelString}`;
+	}
 	document.title = levelString;
 }
 
 function updateProgress() {
+	if (!barEl || !countEl) return;
 	const total = SEQ.length - 1;
 	const done = Math.min(state.step, total);
 	const pct = (done / total) * 100;
@@ -337,8 +340,10 @@ function applySavedTheme() {
 
 function initListeners() {
 	document.addEventListener("keydown", onKey);
-	document.getElementById("resetBtn").addEventListener("click", () => reset());
-	document.getElementById("focusBtn").addEventListener("click", () => boardEl.focus());
+	const resetBtn = document.getElementById("resetBtn");
+	if (resetBtn) resetBtn.addEventListener("click", () => reset());
+	const focusBtn = document.getElementById("focusBtn");
+	if (focusBtn) focusBtn.addEventListener("click", () => boardEl.focus());
 	themeToggle.addEventListener("click", toggleTheme);
 }
 
