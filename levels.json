@@ -305,11 +305,11 @@
 				"end"
 			],
 			"algorithm": [
-				"tekrarla(5) {",
-				"eğer (sarı) {",
+				"tekrarla(5){",
+				"eğer (sarı){",
 				"sol();",
 				"}",
-				"eğer (yeşil) {",
+				"eğer (yeşil){",
 				"sağ();",
 				"}",
 				"yukarı();",
