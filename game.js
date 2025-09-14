@@ -63,19 +63,22 @@ function parseAlgorithmText(level) {
 		element = element.replace("sarı", "<span class=\"algo-block yellow\"></span>");
 		element = element.replace("yeşil", "<span class=\"algo-block green\"></span>");
 		element = element.replace("mavi", "<span class=\"algo-block blue\"></span>");
-		if (element[element.length - 1] === '{') {
-			tab_indent += 1;
-		} else if (element[0] === '}') {
+		const p = document.createElement("p");
+
+		if (element[0] === '}') {
 			tab_indent -= 1;
 		}
-		const p = document.createElement("p");
 		if (tab_indent > 0) {
 			p.innerHTML += "&emsp;".repeat(tab_indent);
 		}
 		p.innerHTML += element;
 		algoEl.appendChild(p);
-		if (index + 1 != level.algorithm.length)
+		if (index + 1 != level.algorithm.length) {
 			algoEl.appendChild(document.createElement("br"));
+		}
+		if (element[element.length - 1] === '{') {
+			tab_indent += 1;
+		}
 	}
 }
 
