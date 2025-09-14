@@ -44,11 +44,11 @@ body {
 
 .board {
   position: relative;
-  width: calc(var(--cell) * 7 + var(--gap) * 8);
-  height: calc(var(--cell) * 7 + var(--gap) * 8);
+  width: calc(var(--cell) * 6 + var(--gap) * 8);
+  height: calc(var(--cell) * 6 + var(--gap) * 8);
   display: grid;
-  grid-template-columns: repeat(7, var(--cell));
-  grid-template-rows: repeat(7, var(--cell));
+  grid-template-columns: repeat(6, var(--cell));
+  grid-template-rows: repeat(6, var(--cell));
   gap: var(--gap);
   background: var(--grid);
   border-radius: 12px;

@@ -1,4 +1,4 @@
-const GRID = 7;
+const GRID = 6;
 const PLAYER_OFFSET = { x: 5, y: 5 };
 
 let levelConfig = {};
