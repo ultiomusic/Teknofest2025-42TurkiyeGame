@@ -4,6 +4,8 @@ const PLAYER_OFFSET = { x: 5, y: 5 };
 let levelConfig = {};
 
 let START = {};
+let X_BOUNDS = {x: 999, y: -999};
+let Y_BOUNDS = {x: 999, y: -999};
 
 let SEQ;
 
@@ -103,6 +105,18 @@ function buildGrid(level) {
 			for (let i = 0; i < BLOCKS.length; i++) {
 				const cell = BLOCKS[i];
 				if (cell.x === x && cell.y === y) {
+					// Set bounds
+					if (x < X_BOUNDS.x) {
+						X_BOUNDS.x = x;
+					} else if (x > X_BOUNDS.y) {
+						X_BOUNDS.y = x;
+					}
+					if (y < Y_BOUNDS.x) {
+						Y_BOUNDS.x = y;
+					} else if (y > Y_BOUNDS.y) {
+						Y_BOUNDS.y = y;
+					}
+					// Add div
 					if (cell.type === "path") {
 						const pathDiv = document.createElement("div");
 						pathDiv.className = "cell";
@@ -222,13 +236,20 @@ function win() {
 
 function handleMove(dx, dy) {
 	if (!state.playing) return;
-	let nx = (state.pos.x + dx) % GRID;
-	let ny = (state.pos.y + dy) % GRID;
+	let nx = (state.pos.x + dx);
+	let ny = (state.pos.y + dy);
 
-	if (nx < 0)
-		nx = GRID - 1;
-	if (ny < 0)
-		ny = GRID - 1;
+	if (nx < X_BOUNDS.x) {
+		nx = X_BOUNDS.y;
+	} else if (nx > X_BOUNDS.y) {
+		nx = X_BOUNDS.x;
+	}
+	if (ny < Y_BOUNDS.x) {
+		ny = Y_BOUNDS.y;
+	} else if (ny > Y_BOUNDS.y) {
+		ny = Y_BOUNDS.x;
+	}
+
 	let currentMove;
 	if (dx != 0)
 		currentMove = dx < 0 ? "left" : "right";
