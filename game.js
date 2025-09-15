@@ -8,7 +8,7 @@ let SEQ;
 
 let state = {
 	pos: { ...START },
-	step: 0, // Sıradaki index
+	step: 0,
 	playing: true,
 };
 
@@ -17,6 +17,9 @@ let PATH_BLOCKS = [];
 let path_index = 0;
 
 let nextLevelTimeout;
+
+let touchStartX;
+let tocuhStartY;
 
 let PLAYER;
 const boardEl = document.getElementById("board");
@@ -111,7 +114,6 @@ function buildGrid(level) {
 			for (let i = 0; i < BLOCKS.length; i++) {
 				const cell = BLOCKS[i];
 				if (cell.x === x && cell.y === y) {
-					// Set bounds
 					if (x < X_BOUNDS.x) {
 						X_BOUNDS.x = x;
 					} else if (x > X_BOUNDS.y) {
@@ -122,7 +124,6 @@ function buildGrid(level) {
 					} else if (y > Y_BOUNDS.y) {
 						Y_BOUNDS.y = y;
 					}
-					// Add div
 					if (cell.type === "path") {
 						const pathDiv = document.createElement("div");
 						pathDiv.className = "cell";
@@ -163,11 +164,14 @@ async function loadLevel(levelIndex) {
 	parseSequence(level);
 	parseAlgorithmText(level);
 	const levelString = `Level ${levelIndex} • ${level.name}`;
-	levelText.innerHTML = `<span class=\"dot\"></span>${levelString}`;
+	if (levelText) {
+		levelText.innerHTML = `<span class=\"dot\"></span>${levelString}`;
+	}
 	document.title = levelString;
 }
 
 function updateProgress() {
+	if (!barEl || !countEl) return;
 	const total = SEQ.length - 1;
 	const done = Math.min(state.step, total);
 	const pct = (done / total) * 100;
@@ -230,7 +234,8 @@ function enableWinWindow() {
 	}, 50);
 	nextLevelTimeout = setTimeout(() => {
 		next();
-	}, 3050);
+	}, 1050);
+	PLAYER.removeEventListener("transitionend", enableWinWindow);
 }
 
 function win() {
@@ -283,7 +288,6 @@ function handleMove(dx, dy) {
 	else if (dy != 0)
 		currentMove = dy < 0 ? "up" : "down";
 
-	// Sıradaki beklenen hücre
 	const expect = SEQ[state.step];
 	if (expect && expect === currentMove) {
 		state.pos.x = nx;
@@ -303,16 +307,13 @@ function handleMove(dx, dy) {
 		updateProgress();
 		const nextMove = SEQ[state.step];
 		if (nextMove && nextMove === "end") {
-			// Son etiket F'e ulaşıldı
 			win();
 		}
 	} else {
-		// Yanlış kare -> Reset
 		reset(true);
 	}
 }
 
-// Klavye
 function onKey(e) {
 	const key = e.key;
 	if (
@@ -320,7 +321,7 @@ function onKey(e) {
 			key
 		)
 	) {
-		e.preventDefault(); // Sayfa kaymasını engelle
+		e.preventDefault();
 	}
 	switch (key) {
 		case "ArrowUp":
@@ -342,6 +343,25 @@ function onKey(e) {
 	}
 }
 
+function onTouchStart(e) {
+	const touch = e.changedTouches[0];
+	touchStartX = touch.clientX;
+	touchStartY = touch.clientY;
+}
+
+function onTouchEnd(e) {
+	const touch = e.changedTouches[0];
+	const dx = touch.clientX - touchStartX;
+	const dy = touch.clientY - touchStartY;
+	const absDx = Math.abs(dx);
+	const absDy = Math.abs(dy);
+	if (Math.max(absDx, absDy) < 30) return;
+	if (absDx > absDy) {
+			handleMove(dx > 0 ? 1 : -1, 0);
+	} else {
+			handleMove(0, dy > 0 ? 1 : -1);
+	}
+}
 
 function toggleTheme() {
 	const isLight = document.body.classList.toggle("light");
@@ -354,17 +374,20 @@ function applySavedTheme() {
 	if (saved === "light") {
 		document.body.classList.add("light");
 		themeToggle.textContent = "🌙";
-	} else {
+	} else {	
 		themeToggle.textContent = "🌞";
 	}
 }
 
 function initListeners() {
 	document.addEventListener("keydown", onKey);
-	document.getElementById("resetBtn").addEventListener("click", () => reset());
-	document.getElementById("focusBtn").addEventListener("click", () => boardEl.focus());
-	document.getElementById("replayBtn").addEventListener("click", () => reset());
+	const resetBtn = document.getElementById("resetBtn");
+	if (resetBtn) resetBtn.addEventListener("click", () => reset());
+	const focusBtn = document.getElementById("focusBtn");
+	if (focusBtn) focusBtn.addEventListener("click", () => boardEl.focus());
 	themeToggle.addEventListener("click", toggleTheme);
+	boardEl.addEventListener("touchstart", onTouchStart);
+	boardEl.addEventListener("touchadd", onTouchEnd);
 }
 
 async function initGame() {

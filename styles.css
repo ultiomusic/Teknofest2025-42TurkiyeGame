@@ -1,11 +1,11 @@
 :root {
-  --bg: #0f172a; /* koyu lacivert */
-  --panel: #111827; /* panel koyu */
-  --grid: #1f2937; /* grid arka plan */
-  --cell: 56px; /* hücre boyutu */
-  --gap: 6px; /* hücre aralığı */
-  --accent: #22c55e; /* yeşil */
-  --accent-2: #86efac; /* açık yeşil */
+  --bg: #0f172a;
+  --panel: #111827;
+  --grid: #1f2937;
+  --cell: 56px;
+  --gap: 6px;
+  --accent: #22c55e;
+  --accent-2: #86efac;
   --fail: #ef4444;
   --text: #e5e7eb;
   --muted: #94a3b8;
@@ -27,8 +27,9 @@ body {
 }
 .wrap {
   width: min(1100px, 96vw);
-  display: grid;
-  grid-template-columns: 1fr 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center ;
   gap: 18px;
 }
 
@@ -40,8 +41,10 @@ body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35) inset,
     0 8px 28px rgba(0, 0, 0, 0.35);
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  gap: 20px;
 }
 
 .board {
@@ -119,19 +122,17 @@ body {
 }
 
 #algorithm {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	text-align: left;
-	font-size: 1.125rem;
-	width: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: flex-end  ;
+  font-size: 1.125rem;
 }
 #algorithm p {
-	margin: 1%;
-	min-width: 100%;
-	font-size: 1.5rem;
-	font-weight: bold;
+  margin: 1%;
+  font-size: 1.4rem;
+  font-weight: bold;
 }
 #algorithm .algo-block {
 	display: inline-block;
@@ -324,7 +325,7 @@ h1 .dot {
   height: 100%;
   width: 100%;
   background: var(--accent);
-  transition: width 3s linear;
+  transition: width 1s linear;
 }
 
 .card {
@@ -391,7 +392,6 @@ footer {
   justify-content: center;
 }
 
-/* Light mode styles */
 body.light {
   --bg: #f3f4f6;
   --panel: #ffffff;
