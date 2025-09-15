@@ -19,7 +19,9 @@
 			],
 			"gridSize": { "x": 6, "y": 5 },
 			"grid": [
+				{ "type": "normal", "x": 1, "y": 1},
 				{ "type": "normal", "x": 1, "y": 2},
+				{ "type": "normal", "x": 1, "y": 3},
 				{ "type": "normal", "x": 2, "y": 1},
 				{ "type": "normal", "x": 2, "y": 2},
 				{ "type": "normal", "x": 2, "y": 3},
@@ -48,14 +50,20 @@
 			],
 			"gridSize": { "x": 6, "y": 6 },
 			"grid": [
+				{ "type": "normal", "x": 1, "y": 1},
 				{ "type": "normal", "x": 1, "y": 2},
 				{ "type": "normal", "x": 2, "y": 2},
 				{ "type": "normal", "x": 2, "y": 1},
 				{ "type": "normal", "x": 3, "y": 2},
 				{ "type": "normal", "x": 2, "y": 3},
+				{ "type": "normal", "x": 2, "y": 4},
+				{ "type": "normal", "x": 3, "y": 1},
 				{ "type": "normal", "x": 3, "y": 3},
 				{ "type": "normal", "x": 3, "y": 4},
-				{ "type": "normal", "x": 4, "y": 3}
+				{ "type": "normal", "x": 4, "y": 2},
+				{ "type": "normal", "x": 4, "y": 3},
+				{ "type": "normal", "x": 4, "y": 4}
+
 			]
 		},
 		"3": {
@@ -93,6 +101,8 @@
 				{ "type": "normal", "x": 3, "y": 2},
 				{ "type": "normal", "x": 4, "y": 2},
 				{ "type": "normal", "x": 4, "y": 3},
+				{ "type": "normal", "x": 3, "y": 1},
+				{ "type": "normal", "x": 2, "y": 3},
 				{ "type": "normal", "x": 4, "y": 1}
 			]
 		},
@@ -125,6 +135,8 @@
 				{ "type": "normal", "x": 1, "y": 1},
 				{ "type": "normal", "x": 2, "y": 1},
 				{ "type": "normal", "x": 3, "y": 1},
+				{ "type": "normal", "x": 1, "y": 2},
+				{ "type": "normal", "x": 2, "y": 2},
 				{ "type": "normal", "x": 3, "y": 2}
 			]
 		},
@@ -176,7 +188,7 @@
 				"sağ();",
 				"sağ();"
 			],
-			"gridSize": { "x": 6, "y": 6 },
+			"gridSize": { "x": 6, "y": 7 },
 			"grid": [
 				{ "type": "normal", "x": 1, "y": 3},
 				{ "type": "yellow", "x": 2, "y": 3},
@@ -186,7 +198,9 @@
 				{ "type": "normal", "x": 4, "y": 2},
 				{ "type": "normal", "x": 2, "y": 4},
 				{ "type": "normal", "x": 3, "y": 4},
-				{ "type": "normal", "x": 4, "y": 4}
+				{ "type": "normal", "x": 4, "y": 4},
+				{ "type": "normal", "x": 1, "y": 2},
+				{ "type": "normal", "x": 1, "y": 4}
 			]
 		},
 		"7": {
@@ -217,6 +231,7 @@
 				{ "type": "normal", "x": 2, "y": 3},
 				{ "type": "path", "x": 3, "y": 2},
 				{ "type": "normal", "x": 4, "y": 2},
+				{ "type": "normal", "x": 1, "y": 3},
 				{ "type": "normal", "x": 4, "y": 3}
 			]
 		},
@@ -293,7 +308,11 @@
 				{ "type": "path", "x": 4, "y": 3},
 				{ "type": "normal", "x": 4, "y": 4},
 				{ "type": "normal", "x": 3, "y": 2},
-				{ "type": "normal", "x": 5, "y": 2}
+				{ "type": "normal", "x": 5, "y": 2},
+				{ "type": "normal", "x": 1, "y": 2},
+				{ "type": "normal", "x": 2, "y": 2},
+				{ "type": "normal", "x": 5, "y": 3},
+				{ "type": "normal", "x": 5, "y": 4}
 			]
 		},
 		"10": {
