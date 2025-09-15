@@ -384,12 +384,28 @@ footer {
   z-index: 15;
 }
 
+.logo-light {
+  display: none;
+}
+
+.logo-dark {
+  display: block;
+}
+
 .logo-left {
   left: 20px;
 }
 
 .logo-right {
   right: 20px;
+}
+
+body.light .logo-light {
+  display: block;
+}
+
+body.light .logo-dark {
+  display: none;
 }
 
 .corner-controls {
