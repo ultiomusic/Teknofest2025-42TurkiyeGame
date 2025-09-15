@@ -264,8 +264,8 @@
 				"end"
 			],
 			"algorithm": [
-				"tekrarla(2) {",
-				"eğer (mavi) {",
+				"tekrarla(2){",
+				"eğer (mavi){",
 				"yukarı();",
 				"}",
 				"sağ();",
