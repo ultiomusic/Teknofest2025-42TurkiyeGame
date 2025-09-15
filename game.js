@@ -231,30 +231,51 @@ function enableWinWindow() {
 	nextLevelTimeout = setTimeout(() => {
 		next();
 	}, 3050);
-	PLAYER.removeEventListener("transitionend", enableWinWindow);
 }
 
 function win() {
 	state.playing = false;
 	updateProgress();
-	PLAYER.addEventListener("transitionend", enableWinWindow);
+	PLAYER.addEventListener("transitionend", enableWinWindow, { once: true });
+}
+
+function handleBounds(nx, ny) {
+	let beforeNx;
+	let beforeNy;
+
+	beforeNx = nx;
+	beforeNy = ny;
+	if (nx < X_BOUNDS.x) {
+		nx = X_BOUNDS.y;
+		beforeNx = nx + 1;
+	} else if (nx > X_BOUNDS.y) {
+		nx = X_BOUNDS.x;
+		beforeNx = nx - 1;
+	}
+	if (ny < Y_BOUNDS.x) {
+		ny = Y_BOUNDS.y;
+		beforeNy = ny + 1;
+	} else if (ny > Y_BOUNDS.y) {
+		ny = Y_BOUNDS.x;
+		beforeNy = ny - 1;
+	}
+
+	const transition = PLAYER.style.transition;
+	PLAYER.style.transition = "none";
+	placeAbsoluteDiv(PLAYER, { x: beforeNx, y: beforeNy });
+
+	// foce reflow
+	PLAYER.offsetHeight;
+	PLAYER.style.transition = transition;
+	state.pos.x = nx;
+	state.pos.y = ny;
+	placeAbsoluteDiv(PLAYER, state.pos);
 }
 
 function handleMove(dx, dy) {
 	if (!state.playing) return;
 	let nx = (state.pos.x + dx);
 	let ny = (state.pos.y + dy);
-
-	if (nx < X_BOUNDS.x) {
-		nx = X_BOUNDS.y;
-	} else if (nx > X_BOUNDS.y) {
-		nx = X_BOUNDS.x;
-	}
-	if (ny < Y_BOUNDS.x) {
-		ny = Y_BOUNDS.y;
-	} else if (ny > Y_BOUNDS.y) {
-		ny = Y_BOUNDS.x;
-	}
 
 	let currentMove;
 	if (dx != 0)
@@ -267,6 +288,9 @@ function handleMove(dx, dy) {
 	if (expect && expect === currentMove) {
 		state.pos.x = nx;
 		state.pos.y = ny;
+		if (nx < X_BOUNDS.x || nx > X_BOUNDS.y || ny < Y_BOUNDS.x || ny > Y_BOUNDS.y) {
+			PLAYER.addEventListener("transitionend", () => handleBounds(nx, ny), { once: true });
+		}
 		placeAbsoluteDiv(PLAYER, state.pos);
 		if (BLOCKS != null && BLOCKS[state.step] != null && BLOCKS[state.step].type === "blue") {
 			const path_block = PATH_BLOCKS[path_index];

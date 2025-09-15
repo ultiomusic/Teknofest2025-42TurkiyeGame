@@ -55,6 +55,7 @@ body {
   background: var(--grid);
   border-radius: 12px;
   padding: var(--gap);
+  overflow: hidden;
 }
 .cell {
   background: #0f172a;
