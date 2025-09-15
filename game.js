@@ -18,6 +18,9 @@ let path_index = 0;
 
 let nextLevelTimeout;
 
+let touchStartX;
+let tocuhStartY;
+
 let PLAYER;
 const boardEl = document.getElementById("board");
 const barEl = document.getElementById("bar");
@@ -315,6 +318,25 @@ function onKey(e) {
 	}
 }
 
+function onTouchStart(e) {
+	const touch = e.changedTouches[0];
+	touchStartX = touch.clientX;
+	touchStartY = touch.clientY;
+}
+
+function onTouchEnd(e) {
+	const touch = e.changedTouches[0];
+	const dx = touch.clientX - touchStartX;
+	const dy = touch.clientY - touchStartY;
+	const absDx = Math.abs(dx);
+	const absDy = Math.abs(dy);
+	if (Math.max(absDx, absDy) < 30) return;
+	if (absDx > absDy) {
+			handleMove(dx > 0 ? 1 : -1, 0);
+	} else {
+			handleMove(0, dy > 0 ? 1 : -1);
+	}
+}
 
 function toggleTheme() {
 	const isLight = document.body.classList.toggle("light");
@@ -327,7 +349,7 @@ function applySavedTheme() {
 	if (saved === "light") {
 		document.body.classList.add("light");
 		themeToggle.textContent = "🌙";
-	} else {
+	} else {	
 		themeToggle.textContent = "🌞";
 	}
 }
@@ -339,6 +361,8 @@ function initListeners() {
 	const focusBtn = document.getElementById("focusBtn");
 	if (focusBtn) focusBtn.addEventListener("click", () => boardEl.focus());
 	themeToggle.addEventListener("click", toggleTheme);
+	boardEl.addEventListener("touchstart", onTouchStart);
+	boardEl.addEventListener("touchadd", onTouchEnd);
 }
 
 async function initGame() {
