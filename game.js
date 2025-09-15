@@ -19,7 +19,7 @@ let path_index = 0;
 let nextLevelTimeout;
 
 let touchStartX;
-let tocuhStartY;
+let touchStartY;
 
 let PLAYER;
 const boardEl = document.getElementById("board");
@@ -29,6 +29,7 @@ const winEl = document.getElementById("win");
 const nextTimerEl = document.getElementById("nextTimer");
 const levelText = document.getElementById("level-name");
 const themeToggle = document.getElementById("themeToggle");
+const restartBtn = document.getElementById("restartBtn");
 
 async function loadLevelConfig() {
 	const data = await fetch('./levels.json');
@@ -224,6 +225,12 @@ function next() {
 	window.location.href = newUrl;
 }
 
+function restartLevel() {
+	const newUrl = setLevel(1);
+	window.location.href = newUrl;
+
+}
+
 function enableWinWindow() {
 	winEl.classList.add("show");
 	nextTimerEl.classList.add("show");
@@ -386,8 +393,9 @@ function initListeners() {
 	const focusBtn = document.getElementById("focusBtn");
 	if (focusBtn) focusBtn.addEventListener("click", () => boardEl.focus());
 	themeToggle.addEventListener("click", toggleTheme);
+	if (restartBtn) restartBtn.addEventListener("click", restartLevel);
 	boardEl.addEventListener("touchstart", onTouchStart);
-	boardEl.addEventListener("touchadd", onTouchEnd);
+	boardEl.addEventListener("touchend", onTouchEnd);
 }
 
 async function initGame() {
