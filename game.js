@@ -8,7 +8,7 @@ let SEQ;
 
 let state = {
 	pos: { ...START },
-	step: 0, // Sıradaki index
+	step: 0,
 	playing: true,
 };
 
@@ -111,7 +111,6 @@ function buildGrid(level) {
 			for (let i = 0; i < BLOCKS.length; i++) {
 				const cell = BLOCKS[i];
 				if (cell.x === x && cell.y === y) {
-					// Set bounds
 					if (x < X_BOUNDS.x) {
 						X_BOUNDS.x = x;
 					} else if (x > X_BOUNDS.y) {
@@ -122,7 +121,6 @@ function buildGrid(level) {
 					} else if (y > Y_BOUNDS.y) {
 						Y_BOUNDS.y = y;
 					}
-					// Add div
 					if (cell.type === "path") {
 						const pathDiv = document.createElement("div");
 						pathDiv.className = "cell";
@@ -265,7 +263,6 @@ function handleMove(dx, dy) {
 	else if (dy != 0)
 		currentMove = dy < 0 ? "up" : "down";
 
-	// Sıradaki beklenen hücre
 	const expect = SEQ[state.step];
 	if (expect && expect === currentMove) {
 		state.pos.x = nx;
@@ -282,16 +279,13 @@ function handleMove(dx, dy) {
 		updateProgress();
 		const nextMove = SEQ[state.step];
 		if (nextMove && nextMove === "end") {
-			// Son etiket F'e ulaşıldı
 			win();
 		}
 	} else {
-		// Yanlış kare -> Reset
 		reset(true);
 	}
 }
 
-// Klavye
 function onKey(e) {
 	const key = e.key;
 	if (
@@ -299,7 +293,7 @@ function onKey(e) {
 			key
 		)
 	) {
-		e.preventDefault(); // Sayfa kaymasını engelle
+		e.preventDefault();
 	}
 	switch (key) {
 		case "ArrowUp":

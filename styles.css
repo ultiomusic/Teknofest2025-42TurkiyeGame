@@ -1,11 +1,11 @@
 :root {
-  --bg: #0f172a; /* koyu lacivert */
-  --panel: #111827; /* panel koyu */
-  --grid: #1f2937; /* grid arka plan */
-  --cell: 56px; /* hücre boyutu */
-  --gap: 6px; /* hücre aralığı */
-  --accent: #22c55e; /* yeşil */
-  --accent-2: #86efac; /* açık yeşil */
+  --bg: #0f172a;
+  --panel: #111827;
+  --grid: #1f2937;
+  --cell: 56px;
+  --gap: 6px;
+  --accent: #22c55e;
+  --accent-2: #86efac;
   --fail: #ef4444;
   --text: #e5e7eb;
   --muted: #94a3b8;
@@ -391,7 +391,6 @@ footer {
   justify-content: center;
 }
 
-/* Light mode styles */
 body.light {
   --bg: #f3f4f6;
   --panel: #ffffff;
