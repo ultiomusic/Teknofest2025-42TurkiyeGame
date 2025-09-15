@@ -379,7 +379,7 @@ footer {
 .corner-logo {
   position: fixed;
   top: 20px;
-  width: clamp(90px, 18vw, 160px);
+  width: clamp(180px, 36vw, 320px);
   height: auto;
   z-index: 15;
 }
