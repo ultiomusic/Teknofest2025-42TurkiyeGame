@@ -133,6 +133,7 @@ body {
   margin: 1%;
   font-size: 1.4rem;
   font-weight: bold;
+  width: 100%;
 }
 #algorithm .algo-block {
 	display: inline-block;

@@ -317,15 +317,26 @@
 			],
 			"gridSize": { "x": 6, "y": 5 },
 			"grid": [
+				{ "type": "normal", "x": 1, "y": 4},
 				{ "type": "green", "x": 2, "y": 4},
 				{ "type": "yellow", "x": 3, "y": 4},
+				{ "type": "normal", "x": 4, "y": 4},
+				{ "type": "normal", "x": 1, "y": 3},
 				{ "type": "green", "x": 2, "y": 3},
 				{ "type": "yellow", "x": 3, "y": 3},
+				{ "type": "normal", "x": 4, "y": 3},
+				{ "type": "normal", "x": 1, "y": 2},
+				{ "type": "blue", "x": 2, "y": 2},
 				{ "type": "normal", "x": 3, "y": 2},
+				{ "type": "normal", "x": 4, "y": 2},
+				{ "type": "normal", "x": 1, "y": 1},
 				{ "type": "green", "x": 2, "y": 1},
 				{ "type": "yellow", "x": 3, "y": 1},
+				{ "type": "normal", "x": 4, "y": 1},
+				{ "type": "normal", "x": 1, "y": 0},
 				{ "type": "green", "x": 2, "y": 0},
-				{ "type": "yellow", "x": 3, "y": 0}
+				{ "type": "yellow", "x": 3, "y": 0},
+				{ "type": "normal", "x": 4, "y": 0}
 			]
 		}
 	}
