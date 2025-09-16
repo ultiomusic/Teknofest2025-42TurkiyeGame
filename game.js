@@ -1,4 +1,4 @@
-const PLAYER_OFFSET = { x: 20, y: 20 }; 
+const PLAYER_OFFSET = { x: 5, y: 5 }; 
 const PATH_OFFSET = { x: 5, y: 5 }; 
 
 let levelConfig = {};
@@ -50,7 +50,6 @@ const finalTitleEl = finalEl ? finalEl.querySelector("[data-final-title]") : nul
 const finalMessageEl = finalEl ? finalEl.querySelector("[data-final-message]") : null;
 const finalDetailEl = finalEl ? finalEl.querySelector("[data-final-detail]") : null;
 const finalRestartBtn = document.getElementById("finalRestartBtn");
-const playerWrapper = document.getElementById("player-wrapper");
 
 async function loadLevelConfig() {
 	const data = await fetch('./levels.json');
@@ -230,7 +229,7 @@ function buildGrid(level) {
 	PLAYER = document.createElement("div");
 	PLAYER.id = "player";
 	PLAYER.className = "player";
-	playerWrapper.appendChild(PLAYER);
+	boardEl.appendChild(PLAYER);
 }
 
 async function loadLevel(levelIndex) {
