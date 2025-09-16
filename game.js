@@ -20,6 +20,7 @@ let nextLevelTimeout;
 let gameTimer;
 let gameStartTime;
 let gameFinished = false;
+let levelGlowTimeout;
 const GAME_DURATION_MS = 3 * 60 * 1000;
 const STORAGE_KEYS = {
         START_TIME: "gameStartTime",
@@ -33,6 +34,7 @@ let touchStartY;
 
 let PLAYER;
 const boardEl = document.getElementById("board");
+const boardWrapEl = document.querySelector(".board-wrap");	
 const barEl = document.getElementById("bar");
 const countEl = document.getElementById("count");
 const winEl = document.getElementById("win");
@@ -274,6 +276,13 @@ function reset(hard = false) {
 	nextTimerEl.classList.remove("show");
 	nextTimerEl.querySelector("i").style.width = "100%";
 	clearTimeout(nextLevelTimeout);
+	if (boardWrapEl) {
+			boardWrapEl.classList.remove("level-complete");
+	}
+	if (levelGlowTimeout) {
+			clearTimeout(levelGlowTimeout);
+			levelGlowTimeout = null;
+	}
 	boardEl.focus({ preventScroll: true });
 }
 
@@ -304,21 +313,37 @@ function restartLevel() {
 
 }
 
+function showLevelCompleteEffect() {
+	if (!boardWrapEl) return;
+	boardWrapEl.classList.remove("level-complete");
+	void boardWrapEl.offsetWidth;
+	boardWrapEl.classList.add("level-complete");
+	if (levelGlowTimeout) {
+			clearTimeout(levelGlowTimeout);
+	}
+	levelGlowTimeout = setTimeout(() => {
+			if (boardWrapEl) {
+					boardWrapEl.classList.remove("level-complete");
+			}
+			levelGlowTimeout = null;
+	}, 1200);
+}
+
 function enableWinWindow() {
 	if (gameFinished) {
-		PLAYER.removeEventListener("transitionend", enableWinWindow);
-		return;
-}
-winEl.classList.add("show");
-nextTimerEl.classList.add("show");
-const bar = nextTimerEl.querySelector("i");
-bar.style.width = "100%";
-setTimeout(() => {
-		bar.style.width = "0%";
-	}, 50);
+			PLAYER.removeEventListener("transitionend", enableWinWindow);
+			return;
+	}
+	if (winEl) {
+			winEl.classList.remove("show");
+	}
+	if (nextTimerEl) {
+			nextTimerEl.classList.remove("show");
+	}
+	showLevelCompleteEffect();
 	nextLevelTimeout = setTimeout(() => {
-		next();
-	}, 1050);
+			next();
+	}, 1100);
 	PLAYER.removeEventListener("transitionend", enableWinWindow);
 }
 
@@ -349,21 +374,28 @@ function showFinalScreen({ title, message, detail = "", highlight = false, reset
 	state.playing = false;
 	clearTimeout(nextLevelTimeout);
 	if (gameTimer) {
-			clearTimeout(gameTimer);
-			gameTimer = null;
+					clearTimeout(gameTimer);
+					gameTimer = null;
 	}
 	if (winEl) {
-			winEl.classList.remove("show");
+					winEl.classList.remove("show");
 	}
 	if (nextTimerEl) {
-			nextTimerEl.classList.remove("show");
-			const bar = nextTimerEl.querySelector("i");
-			if (bar) {
-					bar.style.width = "100%";
-			}
+					nextTimerEl.classList.remove("show");
+					const bar = nextTimerEl.querySelector("i");
+					if (bar) {
+									bar.style.width = "100%";
+					}
+	}
+	if (boardWrapEl) {
+					boardWrapEl.classList.remove("level-complete");
+	}
+	if (levelGlowTimeout) {
+					clearTimeout(levelGlowTimeout);
+					levelGlowTimeout = null;
 	}
 	if (finalTitleEl && typeof title === "string") {
-			finalTitleEl.textContent = title;
+					finalTitleEl.textContent = title;
 	}
 	if (finalMessageEl && typeof message === "string") {
 			finalMessageEl.textContent = message;
