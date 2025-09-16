@@ -284,6 +284,7 @@ function reset(hard = false) {
 			levelGlowTimeout = null;
 	}
 	boardEl.focus({ preventScroll: true });
+	move = 1;
 }
 
 function getLevel() {
@@ -483,11 +484,13 @@ function handleBounds(nx, ny) {
 let move = 1;
 
 function handleMove(dx, dy) {
-	if (move != 1)
-			return;
+
+	if (!state.playing || move != 1) {
+		return;
+	}
 
 	move = 0;
-	if (!state.playing) return;
+
 	let nx = (state.pos.x + dx);
 	let ny = (state.pos.y + dy);
 
@@ -606,12 +609,12 @@ async function initGame() {
 	const level = getLevel();
 	await loadLevel(level);
 	placeAbsoluteDiv(PLAYER, state.pos);
+	PLAYER.addEventListener("transitionend", () => { move = 1; });
 	updateProgress();
 	boardEl.setAttribute("tabindex", "0");
 	boardEl.addEventListener("click", () => boardEl.focus());
 	boardEl.focus({ preventScroll: true });
 	startGameTimer();
-	PLAYER.addEventListener("transitionend", () => {move = 1;});
 }
 
 applySavedTheme();
