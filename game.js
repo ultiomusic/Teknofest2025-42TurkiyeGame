@@ -17,6 +17,16 @@ let PATH_BLOCKS = [];
 let path_index = 0;
 
 let nextLevelTimeout;
+let gameTimer;
+let gameStartTime;
+let gameFinished = false;
+const GAME_DURATION_MS = 3 * 60 * 1000;
+const STORAGE_KEYS = {
+        START_TIME: "gameStartTime",
+        HIGHEST_LEVEL: "gameSessionHighestLevel",
+};
+let highestLevelCompleted = 0;
+
 
 let touchStartX;
 let touchStartY;
@@ -30,6 +40,11 @@ const nextTimerEl = document.getElementById("nextTimer");
 const levelText = document.getElementById("level-name");
 const themeToggle = document.getElementById("themeToggle");
 const restartBtn = document.getElementById("restartBtn");
+const finalEl = document.getElementById("final");
+const finalTitleEl = finalEl ? finalEl.querySelector("[data-final-title]") : null;
+const finalMessageEl = finalEl ? finalEl.querySelector("[data-final-message]") : null;
+const finalDetailEl = finalEl ? finalEl.querySelector("[data-final-detail]") : null;
+const finalRestartBtn = document.getElementById("finalRestartBtn");
 
 async function loadLevelConfig() {
 	const data = await fetch('./levels.json');
@@ -89,6 +104,62 @@ function parseAlgorithmText(level) {
 function levelCount() {
 	return (Object.keys(levelConfig.levels).length);
 }
+
+function getStoredNumber(key) {
+        const raw = localStorage.getItem(key);
+        if (raw === null) return null;
+        const value = Number(raw);
+        return Number.isFinite(value) ? value : null;
+}
+
+function setStoredNumber(key, value) {
+        localStorage.setItem(key, String(value));
+}
+
+function clearGameSession() {
+        localStorage.removeItem(STORAGE_KEYS.START_TIME);
+        localStorage.removeItem(STORAGE_KEYS.HIGHEST_LEVEL);
+        gameStartTime = null;
+        highestLevelCompleted = 0;
+}
+
+function initializeGameSession() {
+        const storedStart = getStoredNumber(STORAGE_KEYS.START_TIME);
+        if (storedStart === null) {
+                gameStartTime = Date.now();
+                setStoredNumber(STORAGE_KEYS.START_TIME, gameStartTime);
+                setStoredNumber(STORAGE_KEYS.HIGHEST_LEVEL, 0);
+                highestLevelCompleted = 0;
+        } else {
+                gameStartTime = storedStart;
+                const storedHighest = getStoredNumber(STORAGE_KEYS.HIGHEST_LEVEL);
+                highestLevelCompleted = storedHighest !== null ? storedHighest : 0;
+        }
+}
+
+function updateHighestLevel(level) {
+        if (level > highestLevelCompleted) {
+                highestLevelCompleted = level;
+                setStoredNumber(STORAGE_KEYS.HIGHEST_LEVEL, highestLevelCompleted);
+        }
+}
+
+function startGameTimer() {
+        if (gameFinished) return;
+        if (!gameStartTime) {
+                initializeGameSession();
+        }
+        const now = Date.now();
+        const elapsed = now - gameStartTime;
+        const remaining = GAME_DURATION_MS - elapsed;
+        if (remaining <= 0) {
+                endGameDueToTime();
+                return;
+        }
+        clearTimeout(gameTimer);
+        gameTimer = setTimeout(() => {
+                endGameDueToTime();
+        }, remaining);}
 
 function placeAbsoluteDiv(div, pos) {
 	const tx = `calc(${pos.x} * (var(--cell) + var(--gap)) + 5px)`;
@@ -181,6 +252,7 @@ function updateProgress() {
 }
 
 function reset(hard = false) {
+	if (gameFinished) return;
 	state.pos = { ...START };
 	state.step = 0;
 	state.playing = true;
@@ -220,6 +292,7 @@ function setLevel(level) {
 }
 
 function next() {
+	if (gameFinished) return;
 	const levelIndex = getLevel();
 	const newUrl = setLevel(levelIndex == levelCount() ? 1 : levelIndex + 1);
 	window.location.href = newUrl;
@@ -232,11 +305,15 @@ function restartLevel() {
 }
 
 function enableWinWindow() {
-	winEl.classList.add("show");
-	nextTimerEl.classList.add("show");
-	const bar = nextTimerEl.querySelector("i");
-	bar.style.width = "100%";
-	setTimeout(() => {
+	if (gameFinished) {
+		PLAYER.removeEventListener("transitionend", enableWinWindow);
+		return;
+}
+winEl.classList.add("show");
+nextTimerEl.classList.add("show");
+const bar = nextTimerEl.querySelector("i");
+bar.style.width = "100%";
+setTimeout(() => {
 		bar.style.width = "0%";
 	}, 50);
 	nextLevelTimeout = setTimeout(() => {
@@ -246,9 +323,96 @@ function enableWinWindow() {
 }
 
 function win() {
+	if (gameFinished) return;
 	state.playing = false;
 	updateProgress();
-	PLAYER.addEventListener("transitionend", enableWinWindow, { once: true });
+	const currentLevel = getLevel();
+	updateHighestLevel(currentLevel);
+	if (currentLevel === levelCount()) {
+			PLAYER.addEventListener("transitionend", () => {
+					showFinalScreen({
+							title: "🎉 Tebrikler!",
+							message: "Tebrikler seni de yazılım dünyasına bekliyoruz",
+							detail: "Tüm seviyeleri başarıyla tamamladın!",
+							highlight: true,
+							resetSession: true,
+					});
+			}, { once: true });
+	} else {
+			PLAYER.addEventListener("transitionend", enableWinWindow, { once: true });
+	}
+}
+
+function showFinalScreen({ title, message, detail = "", highlight = false, resetSession = false }) {
+	if (gameFinished) return;
+	gameFinished = true;
+	state.playing = false;
+	clearTimeout(nextLevelTimeout);
+	if (gameTimer) {
+			clearTimeout(gameTimer);
+			gameTimer = null;
+	}
+	if (winEl) {
+			winEl.classList.remove("show");
+	}
+	if (nextTimerEl) {
+			nextTimerEl.classList.remove("show");
+			const bar = nextTimerEl.querySelector("i");
+			if (bar) {
+					bar.style.width = "100%";
+			}
+	}
+	if (finalTitleEl && typeof title === "string") {
+			finalTitleEl.textContent = title;
+	}
+	if (finalMessageEl && typeof message === "string") {
+			finalMessageEl.textContent = message;
+	}
+	if (finalDetailEl) {
+			finalDetailEl.textContent = detail || "";
+			finalDetailEl.classList.toggle("show", Boolean(detail));
+	}
+	if (finalEl) {
+			finalEl.classList.toggle("final-success", Boolean(highlight));
+			finalEl.classList.add("show");
+	}
+	if (resetSession) {
+			clearGameSession();
+	}
+}
+
+function endGameDueToTime() {
+	if (gameFinished) return;
+	const highest = highestLevelCompleted;
+	const totalLevels = levelCount();
+	let title = "⏰ Süre Doldu";
+	let message = "3 dakikalık oyun süresi sona erdi.";
+	let detail = highest > 0 ? `Tamamladığın son seviye: ${highest}.` : "Bu turda herhangi bir seviye tamamlanamadı.";
+	let highlight = false;
+
+	if (highest >= 4) {
+			title = "🎉 Tebrikler!";
+			message = "Tebrikler seni de yazılım dünyasına bekliyoruz";
+			highlight = true;
+			if (highest >= totalLevels) {
+					detail = "Tüm seviyeleri başarıyla tamamladın!";
+			} else {
+					detail = "4. seviyeyi tamamlayarak büyük bir adım attın.";
+			}
+	}
+
+	showFinalScreen({
+			title,
+			message,
+			detail,
+			highlight,
+			resetSession: true,
+	});
+}
+
+function restartGameSession() {
+	clearGameSession();
+	restartLevel();
 }
 
 function handleBounds(nx, ny) {
@@ -394,11 +558,13 @@ function initListeners() {
 	if (focusBtn) focusBtn.addEventListener("click", () => boardEl.focus());
 	themeToggle.addEventListener("click", toggleTheme);
 	if (restartBtn) restartBtn.addEventListener("click", restartLevel);
+	if (finalRestartBtn) finalRestartBtn.addEventListener("click", restartGameSession);
 	boardEl.addEventListener("touchstart", onTouchStart);
 	boardEl.addEventListener("touchend", onTouchEnd);
 }
 
 async function initGame() {
+	initializeGameSession();
 	const level = getLevel();
 	await loadLevel(level);
 	placeAbsoluteDiv(PLAYER, state.pos);
@@ -406,6 +572,7 @@ async function initGame() {
 	boardEl.setAttribute("tabindex", "0");
 	boardEl.addEventListener("click", () => boardEl.focus());
 	boardEl.focus({ preventScroll: true });
+	startGameTimer();
 }
 
 applySavedTheme();
