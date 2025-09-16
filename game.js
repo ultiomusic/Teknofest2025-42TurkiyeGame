@@ -1,3 +1,6 @@
+const PLAYER_OFFSET = { x: 20, y: 20 }; 
+const PATH_OFFSET = { x: 5, y: 5 }; 
+
 let levelConfig = {};
 
 let START = {};
@@ -47,6 +50,7 @@ const finalTitleEl = finalEl ? finalEl.querySelector("[data-final-title]") : nul
 const finalMessageEl = finalEl ? finalEl.querySelector("[data-final-message]") : null;
 const finalDetailEl = finalEl ? finalEl.querySelector("[data-final-detail]") : null;
 const finalRestartBtn = document.getElementById("finalRestartBtn");
+const playerWrapper = document.getElementById("player-wrapper");
 
 async function loadLevelConfig() {
 	const data = await fetch('./levels.json');
@@ -163,9 +167,9 @@ function startGameTimer() {
                 endGameDueToTime();
         }, remaining);}
 
-function placeAbsoluteDiv(div, pos) {
-	const tx = `calc(${pos.x} * (var(--cell) + var(--gap)) + 5px)`;
-	const ty = `calc(${pos.y} * (var(--cell) + var(--gap)) + 5px)`;
+function placeAbsoluteDiv(div, pos, offset) {
+	const tx = `calc(${pos.x} * (var(--cell) + var(--gap)) + ${offset.x}px)`;
+	const ty = `calc(${pos.y} * (var(--cell) + var(--gap)) + ${offset.y}px)`;
 	div.style.transform = `translate(${tx}, ${ty})`;
 }
 
@@ -204,7 +208,7 @@ function buildGrid(level) {
 						pathDiv.classList.add("path");
 						boardEl.appendChild(pathDiv);
 						PATH_BLOCKS.push({ pathDiv, cell });
-						placeAbsoluteDiv(pathDiv, { x, y });
+						placeAbsoluteDiv(pathDiv, { x, y }, PATH_OFFSET);
 						path_index++;
 					} else {
 						cellClass = cell.type;
@@ -226,7 +230,7 @@ function buildGrid(level) {
 	PLAYER = document.createElement("div");
 	PLAYER.id = "player";
 	PLAYER.className = "player";
-	boardEl.appendChild(PLAYER);
+	playerWrapper.appendChild(PLAYER);
 }
 
 async function loadLevel(levelIndex) {
@@ -259,10 +263,10 @@ function reset(hard = false) {
 	state.step = 0;
 	state.playing = true;
 	path_index = PATH_BLOCKS.length - 1;
-	placeAbsoluteDiv(PLAYER, state.pos);
+	placeAbsoluteDiv(PLAYER, state.pos, PLAYER_OFFSET);
 	for (let i = 0; i < PATH_BLOCKS.length; i++) {
 		const block = PATH_BLOCKS[i];
-		placeAbsoluteDiv(block.pathDiv, { x: block.cell.x, y: block.cell.y});
+		placeAbsoluteDiv(block.pathDiv, { x: block.cell.x, y: block.cell.y}, PATH_OFFSET);
 	}
 	updateProgress();
 	if (hard) {
@@ -471,14 +475,14 @@ function handleBounds(nx, ny) {
 
 	const transition = PLAYER.style.transition;
 	PLAYER.style.transition = "none";
-	placeAbsoluteDiv(PLAYER, { x: beforeNx, y: beforeNy });
+	placeAbsoluteDiv(PLAYER, { x: beforeNx, y: beforeNy }, PLAYER_OFFSET);
 
 	// foce reflow
 	PLAYER.offsetHeight;
 	PLAYER.style.transition = transition;
 	state.pos.x = nx;
 	state.pos.y = ny;
-	placeAbsoluteDiv(PLAYER, state.pos);
+	placeAbsoluteDiv(PLAYER, state.pos, PLAYER_OFFSET);
 }
 
 let move = 1;
@@ -507,11 +511,11 @@ function handleMove(dx, dy) {
 		if (nx < X_BOUNDS.x || nx > X_BOUNDS.y || ny < Y_BOUNDS.x || ny > Y_BOUNDS.y) {
 			PLAYER.addEventListener("transitionend", () => handleBounds(nx, ny), { once: true });
 		}
-		placeAbsoluteDiv(PLAYER, state.pos);
+		placeAbsoluteDiv(PLAYER, state.pos, PLAYER_OFFSET);
 		if (BLOCKS != null && BLOCKS[state.step] != null && BLOCKS[state.step].type === "blue") {
 			const path_block = PATH_BLOCKS[path_index];
 			if (path_block) {
-				placeAbsoluteDiv(path_block.pathDiv, { x: path_block.cell.x + dx, y: path_block.cell.y + dy });
+				placeAbsoluteDiv(path_block.pathDiv, { x: path_block.cell.x + dx, y: path_block.cell.y + dy }, PATH_OFFSET);
 				path_index--;
 			}
 		}
@@ -608,7 +612,7 @@ async function initGame() {
 	initializeGameSession();
 	const level = getLevel();
 	await loadLevel(level);
-	placeAbsoluteDiv(PLAYER, state.pos);
+	placeAbsoluteDiv(PLAYER, state.pos, PLAYER_OFFSET);
 	PLAYER.addEventListener("transitionend", () => { move = 1; });
 	updateProgress();
 	boardEl.setAttribute("tabindex", "0");

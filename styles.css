@@ -185,6 +185,12 @@ body {
 	background-color: #60fa6d;
 }
 
+#player-wrapper {
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
 .player {
   position: absolute;
   width: var(--cell);
