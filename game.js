@@ -480,7 +480,13 @@ function handleBounds(nx, ny) {
 	placeAbsoluteDiv(PLAYER, state.pos);
 }
 
+let move = 1;
+
 function handleMove(dx, dy) {
+	if (move != 1)
+			return;
+
+	move = 0;
 	if (!state.playing) return;
 	let nx = (state.pos.x + dx);
 	let ny = (state.pos.y + dy);
@@ -605,6 +611,7 @@ async function initGame() {
 	boardEl.addEventListener("click", () => boardEl.focus());
 	boardEl.focus({ preventScroll: true });
 	startGameTimer();
+	PLAYER.addEventListener("transitionend", () => {move = 1;});
 }
 
 applySavedTheme();
