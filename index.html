@@ -1,55 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Level 1 • Sıralı Yol Oyunu</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-
-<body>
-  <img src="BV_Logo_W-2.png" alt="Bilim Vadisi logosu" class="corner-logo logo-left logo-dark" />
-  <img src="BV_Logo_W-1.png" alt="Bilim Vadisi logosu" class="corner-logo logo-left logo-light" />
-  <img src="42 Türkiye_beyaz.png" alt="42 Türkiye logosu" class="corner-logo logo-right logo-dark" />
-  <img src="42 Türkiye_siyah.png" alt="42 Türkiye logosu" class="corner-logo logo-right logo-light" />
-  <div class="corner-controls">
-    <button id="themeToggle" class="theme-toggle" aria-label="Tema Değiştir">
-      🌞
-    </button>
-    <button id="restartBtn" class="restart-btn" aria-label="Yeniden Başlat">
-      🔄
-    </button>
-  </div>
-  <div class="wrap">
-    <div class="board-wrap">
-      <div id="board" class="board" aria-label="7x7 oyun tahtası" tabindex="0"></div>
-      <div id="player-wrapper"></div>
-      <div id="win" class="overlay" aria-live="polite" aria-atomic="true">
-        <div id="nextTimer" class="next-timer" aria-hidden="true">
-          <i></i>
-        </div>
-        <div class="card">
-          <h2>🏁 Bölüm Tamamlandı!</h2>
-          <p>
-            Koşulları sırayla sağlayarak <strong>bölümü tamamladın</strong>
-          </p>
-        </div>
-      </div>
-      <div id="final" class="overlay" aria-live="assertive" aria-atomic="true" role="dialog" aria-modal="true">
-        <div class="card">
-          <h2 data-final-title>⏰ Süre Doldu</h2>
-          <p data-final-message>3 dakikalık oyun süresi sona erdi.</p>
-          <p data-final-detail class="detail"></p>
-          <div class="row">
-            <button id="finalRestartBtn" class="btn">Yeniden Başla</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="algorithm"></div>
-  </div>
-  <script src="game.js"></script>
-</body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>42 Türkiye Algoritma Oyunu</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
